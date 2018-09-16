@@ -9,103 +9,102 @@
 import UIKit
 import GoogleSignIn
 import GoogleAPIClientForREST
+import SVProgressHUD
 
-class FilesViewController: UIViewController {
-    
+class FilesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    private var files:Array<GTLRDrive_File> = []
     private let serviceDrive = GTLRDriveService()
-
+    private var selectedIndex:Int = 0
+    
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var emailLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-                self.serviceDrive.authorizer = GIDSignIn.sharedInstance().currentUser.authentication.fetcherAuthorizer()
+        self.serviceDrive.authorizer = GIDSignIn.sharedInstance().currentUser.authentication.fetcherAuthorizer()
+        
+        self.emailLabel.text = GIDSignIn.sharedInstance().currentUser.profile.email
+        
+        SVProgressHUD.show()
 
         let query = GTLRDriveQuery_FilesList.query()
-        query.pageSize = 5
+        query.pageSize = 10
         query.fields = "files"
         serviceDrive.executeQuery(query, delegate: self, didFinish:#selector(displayResultWithTicket(ticket:finishedWithObject:error:)))
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueShowCards" {
+            let vc = segue.destination as! CardsViewController
+            vc.selectedFile = files[selectedIndex]
+        }
+    }
     
-//    GTLRDrive_File 0x2824f1e30:
-//    {viewedByMe:1
-//    explicitlyTrashed:0
-//    id:"1apdhKnDAO1gERYc867XDspl8DFKRyeVPRWqG6aM50Sg"
-//    viewedByMeTime:"2018-09-15T02:46:54.623Z"
-//    createdTime:"2018-09-14T21:43:45.111Z"
-//    isAppAuthorized:0 owners:[1]
-//    hasThumbnail:1 permissionIds?:[1] trashed:0 quotaBytesUsed:"0"
-//    capabilities://{canListChildren,canAddChildren,canChangeViewersCanCopyContent,canCopy,canDownload,canMoveItemIn//toTeamDrive,canRename,canTrash,canComment,canShare,canRemoveChildren,canChangeCopyRequiresWriter//Permission,canDelete,canUntrash,canEdit,canReadRevisions}
-//    parents:[1]
-//    version:"7"
-//    modifiedTime:"2018-09-14T21:43:46.352Z"
-//    viewersCanCopyContent:1
-//    spaces:[1]
-//    permissions:[1]
-//    writersCanShare:1
-//    name:"Phrasebook"
-//    iconLink:"https://drive-thirdparty.googleusercontent.com/16/type/application/vnd.google-//apps.spreadsheet"
-//    copyRequiresWriterPermission?:0
-//    lastModifyingUser:{emailAddress,me,kind,displayName,permissionId} ownedByMe:1
-//    modifiedByMe:1 starred:0 shared:0 kind:"drive#file" mimeType:"application/vnd.google-apps.spreadsheet" modifiedByMeTime:"2018-09-14T21:43:46.352Z" thumbnailLink:"https://docs.google.com/feeds/vt?gd=true&id=1apdhKnDAO1gERYc867XDspl8DFKRyeVPRWqG6aM50Sg&v=1&s=AMedNnoAAAAAW5yT_pF4gQraTAYp3r2GSFtb7rgB-EUG&sz=s220" thumbnailVersion:"1" webViewLink:"https://docs.google.com/spreadsheets/d/1apdhKnDAO1gERYc867XDspl8DFKRyeVPRWqG6aM50Sg/edit?usp=drivesdk"}
     
+    @IBAction func pressLogout(_ sender: UIButton) {
+        let refreshAlert = UIAlertController(title: "Logout", message: "Do you really want to logout from your Google account?", preferredStyle: .alert)
+        
+        refreshAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+            
+            SVProgressHUD.show()
 
+            let presentingViewController: UIViewController! = self.presentingViewController
+            
+            self.dismiss(animated: false) {
+                // go back to AuthViewController
+                presentingViewController.dismiss(animated: true, completion: {
+                    GIDSignIn.sharedInstance()?.signOut()
+                })
+            }
+            
+        }))
+        
+        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+        }))
+        
+        present(refreshAlert, animated: true, completion: nil)
+    }
+    
+    // MARK: - Table Data Source / count
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return files.count
+    }
+    
+    // MARK: - Table Data Source / View
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "fileInfoCell", for: indexPath) as UITableViewCell
+        
+        // set the text from the data model
+        cell.textLabel?.text = files[indexPath.row].name!
+        cell.detailTextLabel?.text = "\(files[indexPath.row].modifiedTime!.stringValue)"
+        return cell
+    }
+    
+    // MARK: - Table Delegate
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        self.selectedIndex = indexPath.row
+        self.performSegue(withIdentifier: "segueShowCards", sender: nil)
+    }
+    
+    // MARK: - Google Service Drive callback
     @objc func displayResultWithTicket(ticket: GTLRServiceTicket,
                                        finishedWithObject result : GTLRDrive_FileList,
                                        error : NSError?) {
         
+        SVProgressHUD.dismiss()
         if let error = error {
             showAlert(title: "Error", message: error.localizedDescription)
             return
         }
-        
+        self.files.removeAll()
         let data = result.files!
         for row in data {
             let file:GTLRDrive_File = row
-            print(file.mimeType!)//application/vnd.google-apps.spreadsheet
-            print(file.identifier!)
-            print(file.modifiedTime!)
-            print(file.name!)
-            
-            //            print("\(row[0] as! String) : \(row[1] as! String) : \(row[2] as! String) : \(row[3] as! String)")
-            
+            if file.mimeType!.hasSuffix(".spreadsheet") {
+               self.files.append(file)
+            }
         }
-        self.performSegue(withIdentifier: "segueShowCards", sender: nil)
-        
-        //        var majorsString = ""
-        //        let rows = result.values!
-        //
-        //        if rows.isEmpty {
-        ////            output.text = "No data found."
-        //            return
-        //        }
-        
-        //        majorsString += "Name, Major:\n"
-        //        for row in rows {
-        //            let name = row[2]
-        //            let major = row[3]
-        //
-        //            majorsString += "\(name), \(major)\n"
-        //        }
-        //
-        //        print(majorsString)
-        
-        //        output.text = majorsString
+        self.tableView.reloadData()
     }
-    
-    // Helper for showing an alert
-    func showAlert(title : String, message: String) {
-        let alert = UIAlertController(
-            title: title,
-            message: message,
-            preferredStyle: UIAlertController.Style.alert
-        )
-        let ok = UIAlertAction(
-            title: "OK",
-            style: UIAlertAction.Style.default,
-            handler: nil
-        )
-        alert.addAction(ok)
-        present(alert, animated: true, completion: nil)
-    }
-
 }
