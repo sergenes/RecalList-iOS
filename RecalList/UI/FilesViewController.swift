@@ -47,13 +47,13 @@ class FilesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         refreshAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
             
-            SVProgressHUD.show()
+//            SVProgressHUD.show()
             // go back to AuthViewController
             GIDSignIn.sharedInstance()?.signOut()
             
             self.dismiss(animated: true) {
                 
-                SVProgressHUD.dismiss()
+//                SVProgressHUD.dismiss()
             }
             
         }))
