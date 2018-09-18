@@ -13,35 +13,24 @@ import SVProgressHUD
 
 
 class LoginViewController: UIViewController, GIDSignInUIDelegate {
-
-    // MARK: - Google Sheets and Drive Services config
-    private let scopes = [kGTLRAuthScopeSheetsDriveReadonly, kGTLRAuthScopeSheetsSpreadsheetsReadonly, kGTLRAuthScopeDrive]
     
     @IBOutlet weak var signInButton: UIButton!
     
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+    }
+
+    
+    @IBAction func pressLoginButton(_ sender: Any) {
         GIDSignIn.sharedInstance().uiDelegate = self
-        GIDSignIn.sharedInstance()?.scopes = scopes
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(receiveToggleAuthUINotification(_:)),
                                                name: .googleAuthUINotification,
                                                object: nil)
-    }
-    
-    override func viewWillAppear(_ animated: Bool){
-        super.viewWillAppear(animated)
-        if GIDSignIn.sharedInstance().hasAuthInKeychain() {
-            SVProgressHUD.show()
-            GIDSignIn.sharedInstance()?.signInSilently()
-        }else{
-            SVProgressHUD.dismiss()
-        }
-    }
-    
-    @IBAction func pressLoginButton(_ sender: Any) {
         GIDSignIn.sharedInstance()?.signIn()
     }
     
@@ -64,7 +53,8 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
                         sleep(1)
                     }
                     UI {
-                        self.performSegue(withIdentifier: "segueShowFiles", sender: nil)
+                        self.appDelegate.appScreensManager?.showFiles()
+//                        self.performSegue(withIdentifier: "segueShowFiles", sender: nil)
                     }
                 }
             }else{

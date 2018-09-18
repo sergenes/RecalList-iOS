@@ -3,6 +3,9 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "ViewController.displayResultWithTicket(ticket:finishedWithObject:error:):ViewController.swift">
+      </ContextState>
+      <ContextState
          contextName = "FilesViewController.displayResultWithTicket(ticket:finishedWithObject:error:):FilesViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -11,7 +14,34 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ViewController.displayResultWithTicket(ticket:finishedWithObject:error:):ViewController.swift">
+         contextName = "CardsViewController.indexChanged(_:):CardsViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in AppScreensManager.showCards():AppScreensManager.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "currV?.navigationController?">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "LoginViewController.viewWillAppear(_:):LoginViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "GIDSignIn.sharedInstance().hasAuthInKeychain()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[GTMOAuth2Authentication beginTokenFetchWithDelegate:didFinishSelector:]:GTMOAuth2Authentication.m">
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in AppScreensManager.showAuthentication():AppScreensManager.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.navigationController.presentedViewController">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "LoginViewController.receiveToggleAuthUINotification(_:):LoginViewController.swift">
@@ -22,7 +52,12 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "CardsViewController.indexChanged(_:):CardsViewController.swift">
+         contextName = "AppScreensManager.afterLogOutNavigation():AppScreensManager.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.navigationController.viewControllers[2]">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
    </ContextStates>
 </VariablesViewState>

@@ -14,10 +14,11 @@ import SVProgressHUD
 class FilesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     private var files:Array<GTLRDrive_File> = []
     private let serviceDrive = GTLRDriveService()
-    private var selectedIndex:Int = 0
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emailLabel: UILabel!
+    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,27 +35,15 @@ class FilesViewController: UIViewController, UITableViewDelegate, UITableViewDat
         serviceDrive.executeQuery(query, delegate: self, didFinish:#selector(displayResultWithTicket(ticket:finishedWithObject:error:)))
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueShowCards" {
-            let vc = segue.destination as! CardsViewController
-            vc.selectedFile = files[selectedIndex]
-        }
-    }
-    
-    
     @IBAction func pressLogout(_ sender: UIButton) {
         let refreshAlert = UIAlertController(title: "Logout", message: "Do you really want to logout from your Google account?", preferredStyle: .alert)
         
         refreshAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
             
-//            SVProgressHUD.show()
             // go back to AuthViewController
             GIDSignIn.sharedInstance()?.signOut()
             
-            self.dismiss(animated: true) {
-                
-//                SVProgressHUD.dismiss()
-            }
+            self.appDelegate.appScreensManager?.afterLogOutNavigation()
             
         }))
         
@@ -81,8 +70,7 @@ class FilesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     // MARK: - Table Delegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        self.selectedIndex = indexPath.row
-        self.performSegue(withIdentifier: "segueShowCards", sender: nil)
+        self.appDelegate.appScreensManager?.showCards(file: files[indexPath.row])
     }
     
     // MARK: - Google Service Drive callback

@@ -8,12 +8,34 @@
 
 import UIKit
 
+
+
+func nprint(_ message: String, function: String = #function) {
+    #if DEBUG
+    print("\(function): \(message)")
+    #endif
+}
+
 func BG(_ block: @escaping ()->Void) {
     DispatchQueue.global(qos: .default).async(execute: block)
 }
 
 func UI(_ block: @escaping ()->Void) {
     DispatchQueue.main.async(execute: block)
+}
+
+extension UINavigationController {
+    
+    ///Get previous view controller of the navigation stack
+    func previousViewController() -> UIViewController?{
+        
+        let lenght = self.viewControllers.count
+        
+        let previousViewController: UIViewController? = lenght >= 2 ? self.viewControllers[lenght-2] : nil
+        
+        return previousViewController
+    }
+    
 }
 
 extension UIView {
