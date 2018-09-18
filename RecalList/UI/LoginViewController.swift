@@ -12,7 +12,7 @@ import GoogleAPIClientForREST
 import SVProgressHUD
 
 
-class AuthViewController: UIViewController, GIDSignInUIDelegate {
+class LoginViewController: UIViewController, GIDSignInUIDelegate {
 
     private let scopes = [kGTLRAuthScopeSheetsDriveReadonly, kGTLRAuthScopeSheetsSpreadsheetsReadonly, kGTLRAuthScopeDrive]
     

@@ -11,10 +11,12 @@ import GoogleSignIn
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
-
+    
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+//        window = UIWindow(frame: UIScreen.main.bounds)
         // Initialize sign-in
         GIDSignIn.sharedInstance().clientID = Secrets.CLIENT_ID
         GIDSignIn.sharedInstance().delegate = self
@@ -55,19 +57,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             print("\(error.localizedDescription)")
         } else {
             // Perform any operations on signed in user here.
-            let userId:String = user.userID                  // For client-side use only!
-            let idToken:String = user.authentication.idToken // Safe to send to the server
+            //let userId:String = user.userID                  // For client-side use only!
+            //let idToken:String = user.authentication.idToken // Safe to send to the server
             let fullName:String = user.profile.name
-            let givenName:String = user.profile.givenName
-            let familyName:String = user.profile.familyName
-            let email:String = user.profile.email
+            //let givenName:String = user.profile.givenName//
+            //let familyName:String = user.profile.familyName
+            //let email:String = user.profile.email
             
-            print(userId)
-            print(idToken)
-            print(fullName)
-            print(givenName)
-            print(familyName)
-            print(email)
+           //print(userId)
+           //print(idToken)
+           //print(fullName)
+           //print(givenName)
+           //print(familyName)
+           //print(email)
             
             NotificationCenter.default.post(
                 name: Notification.Name(rawValue: "ToggleAuthUINotification"),
