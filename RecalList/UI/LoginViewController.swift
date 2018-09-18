@@ -14,13 +14,10 @@ import SVProgressHUD
 
 class LoginViewController: UIViewController, GIDSignInUIDelegate {
 
+    // MARK: - Google Sheets and Drive Services config
     private let scopes = [kGTLRAuthScopeSheetsDriveReadonly, kGTLRAuthScopeSheetsSpreadsheetsReadonly, kGTLRAuthScopeDrive]
     
-    private let service = GTLRSheetsService()
-    private let serviceDrive = GTLRDriveService()
-    
     @IBOutlet weak var signInButton: UIButton!
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,13 +25,10 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
         GIDSignIn.sharedInstance().uiDelegate = self
         GIDSignIn.sharedInstance()?.scopes = scopes
         
-        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(receiveToggleAuthUINotification(_:)),
-                                               name: NSNotification.Name(rawValue: "ToggleAuthUINotification"),
+                                               name: .googleAuthUINotification,
                                                object: nil)
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool){
@@ -48,29 +42,34 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
     }
     
     @IBAction func pressLoginButton(_ sender: Any) {
-        SVProgressHUD.show()
         GIDSignIn.sharedInstance()?.signIn()
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self,
-                                                  name: NSNotification.Name(rawValue: "ToggleAuthUINotification"),
+                                                  name: .googleAuthUINotification,
                                                   object: nil)
     }
     
+    // MARK: - Google GoogleSignIn callback
     @objc func receiveToggleAuthUINotification(_ notification: NSNotification) {
-        if notification.name.rawValue == "ToggleAuthUINotification" {
+        if notification.equal(name:.googleAuthUINotification) {
             if notification.userInfo != nil {
                 guard let userInfo = notification.userInfo as? [String:String] else { return }
                 print("receiveToggleAuthUINotification: "+userInfo["statusText"]!)
-                SVProgressHUD.dismiss()
-                
-                self.performSegue(withIdentifier: "segueShowFiles", sender: nil)
+                //wait until SFAuthenticationViewController from Google's lib will dissmissed
+                BG {
+                    while (self.presentedViewController != nil){
+                        print("presentingViewController: \(String(describing: self.presentedViewController))")
+                        sleep(1)
+                    }
+                    UI {
+                        self.performSegue(withIdentifier: "segueShowFiles", sender: nil)
+                    }
+                }
             }else{
-                SVProgressHUD.dismiss()
                 showAlert(title: "Error", message: "Wrong email or password.")
             }
         }
     }
 }
-

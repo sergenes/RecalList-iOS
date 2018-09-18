@@ -53,6 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
               withError error: Error!) {
+        print("didSignInFor \(String(describing: user.profile.email))")
         if let error = error {
             print("\(error.localizedDescription)")
         } else {
@@ -72,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
            //print(email)
             
             NotificationCenter.default.post(
-                name: Notification.Name(rawValue: "ToggleAuthUINotification"),
+                name: .googleAuthUINotification,
                 object: nil,
                 userInfo: ["statusText": "Signed in user:\n\(fullName)"])
             
@@ -81,9 +82,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!,
               withError error: Error!) {
+        print("didDisconnectWith \(String(describing: user.profile.email))")
         
     }
-
 
 }
 

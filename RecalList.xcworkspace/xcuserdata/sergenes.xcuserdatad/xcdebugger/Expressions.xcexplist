@@ -13,5 +13,16 @@
       <ContextState
          contextName = "ViewController.displayResultWithTicket(ticket:finishedWithObject:error:):ViewController.swift">
       </ContextState>
+      <ContextState
+         contextName = "LoginViewController.receiveToggleAuthUINotification(_:):LoginViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "presentingViewController?.parent is LoginViewController">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "CardsViewController.indexChanged(_:):CardsViewController.swift">
+      </ContextState>
    </ContextStates>
 </VariablesViewState>

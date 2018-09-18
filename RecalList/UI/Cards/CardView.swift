@@ -14,7 +14,6 @@ public class CardView: UIView {
     
     @IBOutlet weak var frontView: UIView!
     @IBOutlet weak var backView: UIView!
-    
     @IBOutlet weak var countLabel: UILabel!
     @IBOutlet weak var frontLabel: UILabel!
     @IBOutlet weak var backLabel: UILabel!

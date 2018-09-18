@@ -12,6 +12,14 @@ import GoogleAPIClientForREST
 extension Notification.Name {
     static let dataDownloadCompleted = Notification.Name(
         rawValue: "com.nes.dataDownloadCompleted")
+    static let googleAuthUINotification = Notification.Name(
+        rawValue: "ToggleAuthUINotification")
+}
+
+extension NSNotification {
+    func equal(name:Notification.Name)->Bool{
+        return self.name.rawValue == name.rawValue
+    }
 }
 
 protocol AppFlowProtocol {

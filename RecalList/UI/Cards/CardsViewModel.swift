@@ -29,7 +29,7 @@ public class Card {
 }
 
 class CardsViewModel: NSObject, CardsScreenProtocol {
-    private var selectedSegmentIndex:Int?
+    var selectedSegmentIndex:Int = 0
 //    typealias CardsListReadyCompletion = (String) -> Void
 //    
 //    func cardsListReady(completion: @escaping CardsListReadyCompletion) {
@@ -80,7 +80,7 @@ class CardsViewModel: NSObject, CardsScreenProtocol {
     
     // MARK: - CardsScreenProtocol
     func getDirection()->Int{
-        return selectedSegmentIndex!
+        return selectedSegmentIndex
     }
     
     let synth = AVSpeechSynthesizer()
