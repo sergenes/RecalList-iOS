@@ -30,7 +30,7 @@ class CardsDataSource: KolodaViewDataSource {
         let cardView:CardView = CardView.fromNib()
         cardView.frame = CGRectMake(0,0,koloda.frame.width,koloda.frame.height - 150)
         
-        cardView.setup(card: card, cardsScreen: viewModel)
+        cardView.setup(card: card, index: index, cardsScreen: viewModel)
         
         if index % 2 == 0 {
             cardView.setColor(color: UIColor.init(netHex:0xb6caff))

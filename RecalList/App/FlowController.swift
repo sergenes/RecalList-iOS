@@ -16,6 +16,8 @@ extension Notification.Name {
         rawValue: "com.nes.actionNotification")
     static let googleAuthUINotification = Notification.Name(
         rawValue: "ToggleAuthUINotification")
+    static let googleUpdateNotification = Notification.Name(
+        rawValue: "googleUpdateNotification")
 }
 
 extension NSNotification {
@@ -25,6 +27,7 @@ extension NSNotification {
 }
 
 protocol CardsScreenProtocol{
+    func peepTranslation(index:Int)
     func sayWord(index:Int)
     func getCardsCount()->Int
     func getDirection()->Int

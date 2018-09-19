@@ -18,7 +18,7 @@ public class CardView: UIView {
     @IBOutlet weak var frontLabel: UILabel!
     @IBOutlet weak var backLabel: UILabel!
     
-    func setup(card: Card, cardsScreen: CardsScreenProtocol) {
+    func setup(card: Card, index:Int, cardsScreen: CardsScreenProtocol) {
         self.cardsScreen = cardsScreen
         
         if cardsScreen.getDirection() == 0 {
@@ -30,7 +30,7 @@ public class CardView: UIView {
         }
         self.tag = card.index
         
-        countLabel.text = "\(card.index+1) of \(cardsScreen.getCardsCount())"
+        countLabel.text = "\(index+1) of \(cardsScreen.getCardsCount())"
     }
     
     func doRoundCorners(){
@@ -42,6 +42,7 @@ public class CardView: UIView {
     @IBAction func pressTranslate(_ sender: UIButton) {
         UIView.transition(from: self.frontView, to: self.backView, duration: 1, options: [.transitionFlipFromBottom, .showHideTransitionViews], completion: nil)
         self.backView.translatesAutoresizingMaskIntoConstraints = false
+        cardsScreen.peepTranslation(index: self.tag)
     }
     
     

@@ -17,9 +17,7 @@ class FilesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emailLabel: UILabel!
-    
-//    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         

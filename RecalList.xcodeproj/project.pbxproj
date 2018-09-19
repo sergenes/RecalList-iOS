@@ -19,6 +19,7 @@
 		1E615681214D70B400A2BFAE /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1E615680214D70B400A2BFAE /* credentials.plist */; };
 		1E7EB5E021518E1200931C35 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E7EB5D621514EA800931C35 /* Main.storyboard */; };
 		1E7EB5E121518E1A00931C35 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E391113214C6DD200382E8D /* LaunchScreen.storyboard */; };
+		1E7EB5E4215287D500931C35 /* AppAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7EB5E3215287D500931C35 /* AppAPI.swift */; };
 		1E9D2B8A214DBFC4000A87C8 /* CardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E9D2B88214DBFC3000A87C8 /* CardView.xib */; };
 		1E9D2B8B214DBFC4000A87C8 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D2B89214DBFC4000A87C8 /* CardView.swift */; };
 		1E9D2B92214F262D000A87C8 /* AppNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D2B91214F262D000A87C8 /* AppNavigator.swift */; };
@@ -67,6 +68,7 @@
 		1E61567E214D6F6B00A2BFAE /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Secrets.swift; path = ../../../local/Secrets.swift; sourceTree = "<group>"; };
 		1E615680214D70B400A2BFAE /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = credentials.plist; path = ../../local/credentials.plist; sourceTree = "<group>"; };
 		1E7EB5D721514EA800931C35 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1E7EB5E3215287D500931C35 /* AppAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAPI.swift; sourceTree = "<group>"; };
 		1E9D2B88214DBFC3000A87C8 /* CardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardView.xib; sourceTree = "<group>"; };
 		1E9D2B89214DBFC4000A87C8 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		1E9D2B91214F262D000A87C8 /* AppNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigator.swift; sourceTree = "<group>"; };
@@ -192,9 +194,9 @@
 		1E39113A214C6E1100382E8D /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				1E7EB5E52152CE1600931C35 /* Files */,
 				1E9D2B9F21507C8C000A87C8 /* Cards */,
 				1E39110C214C6DD100382E8D /* LoginViewController.swift */,
-				1E391141214CAD5A00382E8D /* FilesViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -207,9 +209,26 @@
 			path = Navigator;
 			sourceTree = "<group>";
 		};
+		1E7EB5E22152875300931C35 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				1E7EB5E3215287D500931C35 /* AppAPI.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		1E7EB5E52152CE1600931C35 /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				1E391141214CAD5A00382E8D /* FilesViewController.swift */,
+			);
+			path = Files;
+			sourceTree = "<group>";
+		};
 		1E9D2B8C214F2266000A87C8 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				1E7EB5E22152875300931C35 /* API */,
 				1E7EB5DF21516C9C00931C35 /* Navigator */,
 				1E39110A214C6DD100382E8D /* AppDelegate.swift */,
 				1E9D2B99214FE3C0000A87C8 /* FlowController.swift */,
@@ -499,6 +518,7 @@
 				1E9D2B8B214DBFC4000A87C8 /* CardView.swift in Sources */,
 				1E39110D214C6DD100382E8D /* LoginViewController.swift in Sources */,
 				1E9D2B92214F262D000A87C8 /* AppNavigator.swift in Sources */,
+				1E7EB5E4215287D500931C35 /* AppAPI.swift in Sources */,
 				1E9D2B9C214FF42E000A87C8 /* CardsViewModel.swift in Sources */,
 				1E9D2BA12150A45B000A87C8 /* CardsDataSource.swift in Sources */,
 				1E9D2B9A214FE3C0000A87C8 /* FlowController.swift in Sources */,

@@ -9,7 +9,6 @@
 import AVFoundation
 import Koloda
 import GoogleAPIClientForREST
-import GoogleSignIn
 
 // MARK: - Card is data model
 public class Card {
@@ -18,37 +17,41 @@ public class Card {
     var translation: String
     var from: String
     var to: String
+    var peeped: Int = 10
     
-    public init(index:Int, word:String, translation:String, from:String, to:String){
+    public init(index:Int, word:String, translation:String, from:String, to:String, peeped:Int){
         self.index = index
         self.word = word
         self.translation = translation
         self.from = from
         self.to = to
+        self.peeped = peeped
     }
 }
 
-class CardsViewModel: NSObject, CardsScreenProtocol {
+class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppAPIInjector {
     var selectedSegmentIndex:Int = 0
 //    typealias CardsListReadyCompletion = (String) -> Void
 //    
 //    func cardsListReady(completion: @escaping CardsListReadyCompletion) {
 //
 //    }
+    let synth = AVSpeechSynthesizer()
+    let selectedFile:GTLRDrive_File
     
-    private var wordsArray:Array<Card> = []
+    // MARK: - AppAPIServiceDelegate
+    internal var wordsArray:Array<Card> = []
     
-    private let service = GTLRSheetsService()
-    
-    init(selectedFile:GTLRDrive_File) {
-        super.init()
-        self.service.authorizer = GIDSignIn.sharedInstance().currentUser.authentication.fetcherAuthorizer()
+    // MARK: - AppAPIServiceDelegate
+    func appendCard(card:Card){
+         wordsArray.append(card)
+    }
         
-        if let spreadsheetId = selectedFile.identifier {
-            let range = "Phrasebook!A1:D"
-            let query = GTLRSheetsQuery_SpreadsheetsValuesGet.query(withSpreadsheetId: spreadsheetId, range:range)
-            service.executeQuery(query, delegate: self, didFinish:#selector(displayResultWithTicket(ticket:finishedWithObject:error:)))
-        }
+    init(selectedFile:GTLRDrive_File) {
+        self.selectedFile = selectedFile
+        super.init()
+        wordsArray.removeAll()
+        appAPI.requestCards(selectedFile: selectedFile, delegate: self)
     }
     
     func getCard(index:Int)->Card{
@@ -83,34 +86,10 @@ class CardsViewModel: NSObject, CardsScreenProtocol {
         return selectedSegmentIndex
     }
     
-    let synth = AVSpeechSynthesizer()
-
-    // MARK: - Google Service Spreadsheet callback
-    @objc func displayResultWithTicket(ticket: GTLRServiceTicket,
-                                       finishedWithObject result : GTLRSheets_ValueRange,
-                                       error : NSError?) {
-        if let error = error {
-            NotificationCenter.default.post(name: .dataDownloadCompleted,
-                                            object: nil,
-                                            userInfo: ["Error": error])
-            return
-        }
-        
-        let data = result.values!
-        for row in data {
-            let word : String = row[2] as! String
-            let translation: String = row[3] as! String
-            let from: String = row[0] as! String
-            let to: String = row[1] as! String
-            
-            wordsArray.append(Card(index: wordsArray.count,word: word, translation: translation, from: from, to:to))
-            
-            print("\(row[0] as! String) : \(row[1] as! String) : \(row[2] as! String) : \(row[3] as! String)")
-            
-            NotificationCenter.default.post(name: .dataDownloadCompleted,
-                                            object: nil,
-                                            userInfo: ["Message":"Ok"])
-            
-        }
+    // MARK: - CardsScreenProtocol
+    func peepTranslation(index:Int){
+        let card = wordsArray[index]
+        card.peeped = card.peeped + 1
+        appAPI.requestUpdateACard(card: card, selectedFile: selectedFile, delegate: self)
     }
 }

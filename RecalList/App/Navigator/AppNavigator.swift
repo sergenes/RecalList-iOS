@@ -11,6 +11,7 @@ import SVProgressHUD
 import GoogleSignIn
 import GoogleAPIClientForREST
 
+
 enum Action {
     case logedIn
     case logedOut
@@ -21,6 +22,9 @@ enum Action {
 class AppNavigator: NSObject {
     fileprivate var window: UIWindow
     fileprivate let navigationController:UINavigationController
+    
+    // MARK: - Google Sheets and Drive Services config
+    private let scopes = [kGTLRAuthScopeSheetsDrive, kGTLRAuthScopeSheetsSpreadsheets, kGTLRAuthScopeDrive]
     
     init(with window:UIWindow) {
         self.window = window
@@ -50,6 +54,7 @@ class AppNavigator: NSObject {
         window.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil)
             .instantiateViewController(withIdentifier: "launchScreen")
         window.makeKeyAndVisible()
+        GIDSignIn.sharedInstance().scopes = scopes
         BG {
             Thread.sleep(forTimeInterval: 2)
             if GIDSignIn.sharedInstance().hasAuthInKeychain() {

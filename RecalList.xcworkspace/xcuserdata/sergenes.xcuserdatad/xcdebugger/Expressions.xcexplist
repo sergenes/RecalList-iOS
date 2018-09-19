@@ -36,6 +36,17 @@
          contextName = "-[GTMOAuth2Authentication beginTokenFetchWithDelegate:didFinishSelector:]:GTMOAuth2Authentication.m">
       </ContextState>
       <ContextState
+         contextName = "AppAPI.displayResultWithTicket(ticket:finishedWithObject:error:):AppAPI.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "vr!.values">
+            </PersistentString>
+            <PersistentString
+               value = "result.values!">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "closure #1 in AppScreensManager.showAuthentication():AppScreensManager.swift">
          <PersistentStrings>
             <PersistentString

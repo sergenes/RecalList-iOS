@@ -12,8 +12,6 @@ import GoogleAPIClientForREST
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
-    // MARK: - Google Sheets and Drive Services config
-    private let scopes = [kGTLRAuthScopeSheetsDriveReadonly, kGTLRAuthScopeSheetsSpreadsheetsReadonly, kGTLRAuthScopeDrive]
     
     var window: UIWindow?
     var appScreensManager:AppNavigator?
@@ -25,7 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         // Initialize sign-in
         GIDSignIn.sharedInstance().clientID = Secrets.CLIENT_ID
         GIDSignIn.sharedInstance().delegate = self //todo on abstract Authentication manager
-        GIDSignIn.sharedInstance().scopes = scopes
         
         appScreensManager?.start()
         return true
