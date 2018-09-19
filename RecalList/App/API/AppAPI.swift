@@ -24,7 +24,6 @@ fileprivate let shared = AppAPI()
 protocol AppAPIDelegate {}
 
 protocol AppAPIServiceDelegate:AppAPIDelegate {
-    var wordsArray:Array<Card> {get set}
     func appendCard(card:Card)
 }
 

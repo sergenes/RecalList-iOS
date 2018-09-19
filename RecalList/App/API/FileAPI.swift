@@ -9,7 +9,6 @@ import GoogleSignIn
 import GoogleAPIClientForREST
 
 protocol AppAPIFilesDelegate:AppAPIDelegate {
-//    var files:Array<GTLRDrive_File> {get set}
     func appendFile(file:GTLRDrive_File)
 }
 
