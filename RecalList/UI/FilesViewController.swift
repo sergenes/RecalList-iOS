@@ -18,7 +18,7 @@ class FilesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emailLabel: UILabel!
     
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,8 +42,11 @@ class FilesViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             // go back to AuthViewController
             GIDSignIn.sharedInstance()?.signOut()
-            
-            self.appDelegate.appScreensManager?.afterLogOutNavigation()
+                        
+            NotificationCenter.default.post(
+                name: .actionNotification,
+                object: Action.logedOut,
+                userInfo: nil)
             
         }))
         
@@ -70,7 +73,11 @@ class FilesViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     // MARK: - Table Delegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        self.appDelegate.appScreensManager?.showCards(file: files[indexPath.row])
+        let file = self.files[indexPath.row]
+        NotificationCenter.default.post(
+            name: .actionNotification,
+            object: Action.fileSelected,
+            userInfo: ["file":file])
     }
     
     // MARK: - Google Service Drive callback

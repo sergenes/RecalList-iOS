@@ -22,7 +22,6 @@ class CardsViewController: UIViewController, KolodaViewDelegate {
     @IBOutlet weak var kolodaView: KolodaView!
     @IBOutlet weak var directionSegmentedControl: UISegmentedControl!
     
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     lazy private var viewModel: CardsViewModel = {
         return CardsViewModel(selectedFile: self.selectedFile!)
     }()
@@ -61,7 +60,10 @@ class CardsViewController: UIViewController, KolodaViewDelegate {
     }
     
     @IBAction func pressBack(_ sender: UIButton) {
-        appDelegate.appScreensManager?.back()
+        NotificationCenter.default.post(
+            name: .actionNotification,
+            object: Action.backFromCards,
+            userInfo: nil)
     }
     
      // MARK: - UISegmentedControl action
