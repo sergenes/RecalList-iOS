@@ -20,6 +20,10 @@
 		1E7EB5E021518E1200931C35 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E7EB5D621514EA800931C35 /* Main.storyboard */; };
 		1E7EB5E121518E1A00931C35 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E391113214C6DD200382E8D /* LaunchScreen.storyboard */; };
 		1E7EB5E4215287D500931C35 /* AppAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7EB5E3215287D500931C35 /* AppAPI.swift */; };
+		1E7EB5E72152CEE800931C35 /* FilesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7EB5E62152CEE800931C35 /* FilesDataSource.swift */; };
+		1E7EB5E92152CF6600931C35 /* FilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7EB5E82152CF6600931C35 /* FilesViewModel.swift */; };
+		1E7EB5EB2152D23200931C35 /* FileAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7EB5EA2152D23200931C35 /* FileAPI.swift */; };
+		1E7EB5ED2152D8CB00931C35 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7EB5EC2152D8CB00931C35 /* AuthAPI.swift */; };
 		1E9D2B8A214DBFC4000A87C8 /* CardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E9D2B88214DBFC3000A87C8 /* CardView.xib */; };
 		1E9D2B8B214DBFC4000A87C8 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D2B89214DBFC4000A87C8 /* CardView.swift */; };
 		1E9D2B92214F262D000A87C8 /* AppNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D2B91214F262D000A87C8 /* AppNavigator.swift */; };
@@ -69,6 +73,10 @@
 		1E615680214D70B400A2BFAE /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = credentials.plist; path = ../../local/credentials.plist; sourceTree = "<group>"; };
 		1E7EB5D721514EA800931C35 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1E7EB5E3215287D500931C35 /* AppAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAPI.swift; sourceTree = "<group>"; };
+		1E7EB5E62152CEE800931C35 /* FilesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesDataSource.swift; sourceTree = "<group>"; };
+		1E7EB5E82152CF6600931C35 /* FilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesViewModel.swift; sourceTree = "<group>"; };
+		1E7EB5EA2152D23200931C35 /* FileAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAPI.swift; sourceTree = "<group>"; };
+		1E7EB5EC2152D8CB00931C35 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
 		1E9D2B88214DBFC3000A87C8 /* CardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardView.xib; sourceTree = "<group>"; };
 		1E9D2B89214DBFC4000A87C8 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		1E9D2B91214F262D000A87C8 /* AppNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigator.swift; sourceTree = "<group>"; };
@@ -213,6 +221,8 @@
 			isa = PBXGroup;
 			children = (
 				1E7EB5E3215287D500931C35 /* AppAPI.swift */,
+				1E7EB5EA2152D23200931C35 /* FileAPI.swift */,
+				1E7EB5EC2152D8CB00931C35 /* AuthAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -221,6 +231,8 @@
 			isa = PBXGroup;
 			children = (
 				1E391141214CAD5A00382E8D /* FilesViewController.swift */,
+				1E7EB5E62152CEE800931C35 /* FilesDataSource.swift */,
+				1E7EB5E82152CF6600931C35 /* FilesViewModel.swift */,
 			);
 			path = Files;
 			sourceTree = "<group>";
@@ -517,6 +529,8 @@
 			files = (
 				1E9D2B8B214DBFC4000A87C8 /* CardView.swift in Sources */,
 				1E39110D214C6DD100382E8D /* LoginViewController.swift in Sources */,
+				1E7EB5EB2152D23200931C35 /* FileAPI.swift in Sources */,
+				1E7EB5ED2152D8CB00931C35 /* AuthAPI.swift in Sources */,
 				1E9D2B92214F262D000A87C8 /* AppNavigator.swift in Sources */,
 				1E7EB5E4215287D500931C35 /* AppAPI.swift in Sources */,
 				1E9D2B9C214FF42E000A87C8 /* CardsViewModel.swift in Sources */,
@@ -524,9 +538,11 @@
 				1E9D2B9A214FE3C0000A87C8 /* FlowController.swift in Sources */,
 				1E61567F214D6F6B00A2BFAE /* Secrets.swift in Sources */,
 				1E39110B214C6DD100382E8D /* AppDelegate.swift in Sources */,
+				1E7EB5E92152CF6600931C35 /* FilesViewModel.swift in Sources */,
 				1E9D2B9E215070AE000A87C8 /* Dynamic.swift in Sources */,
 				1E391142214CAD5A00382E8D /* FilesViewController.swift in Sources */,
 				1E391140214CACC600382E8D /* CardsViewController.swift in Sources */,
+				1E7EB5E72152CEE800931C35 /* FilesDataSource.swift in Sources */,
 				1EADB874214D867A00C0B133 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

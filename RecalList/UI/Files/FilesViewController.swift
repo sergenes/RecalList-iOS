@@ -7,40 +7,54 @@
 //
 
 import UIKit
-import GoogleSignIn
 import GoogleAPIClientForREST
 import SVProgressHUD
 
-class FilesViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    private var files:Array<GTLRDrive_File> = []
-    private let serviceDrive = GTLRDriveService()
-    
+class FilesViewController: UIViewController, UITableViewDelegate {
+
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var emailLabel: UILabel!
+    var filesDataSource:FilesDataSource?
+    
+    lazy private var viewModel: FilesViewModel = {
+        return FilesViewModel()
+    }()
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
         
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.serviceDrive.authorizer = GIDSignIn.sharedInstance().currentUser.authentication.fetcherAuthorizer()
+        NotificationCenter.default.addObserver(self, selector: #selector(dataSourceLoaded(_:)), name: .filesDownloadCompleted, object: nil)
         
-        self.emailLabel.text = GIDSignIn.sharedInstance().currentUser.profile.email
+        filesDataSource = FilesDataSource(viewModel: viewModel)
+        
+        self.emailLabel.text = viewModel.getAccountEmail()
+        self.tableView.dataSource = filesDataSource
         
         SVProgressHUD.show()
-
-        let query = GTLRDriveQuery_FilesList.query()
-        query.pageSize = 10
-        query.fields = "files"
-        serviceDrive.executeQuery(query, delegate: self, didFinish:#selector(displayResultWithTicket(ticket:finishedWithObject:error:)))
+    }
+    
+    @objc func dataSourceLoaded(_ notification: Notification) {
+        if let error:NSError = notification.userInfo?["Error"] as? NSError {
+            SVProgressHUD.dismiss()
+            showAlert(title: "Error", message: error.localizedDescription)
+            return
+        }
+        self.tableView.reloadData()
+        SVProgressHUD.dismiss()
     }
     
     @IBAction func pressLogout(_ sender: UIButton) {
-        let refreshAlert = UIAlertController(title: "Logout", message: "Do you really want to logout from your Google account?", preferredStyle: .alert)
+        let logoutAlert = UIAlertController(title: "Logout", message: "Do you really want to logout from your Google account?", preferredStyle: .alert)
         
-        refreshAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
+        logoutAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action: UIAlertAction!) in
             
             // go back to AuthViewController
-            GIDSignIn.sharedInstance()?.signOut()
-                        
+            self.viewModel.requestLogOut()
+            
             NotificationCenter.default.post(
                 name: .actionNotification,
                 object: Action.logedOut,
@@ -48,54 +62,19 @@ class FilesViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
         }))
         
-        refreshAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
+        logoutAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action: UIAlertAction!) in
         }))
         
-        present(refreshAlert, animated: true, completion: nil)
+        present(logoutAlert, animated: true, completion: nil)
     }
     
-    // MARK: - Table Data Source / count
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return files.count
-    }
-    
-    // MARK: - Table Data Source / View
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "fileInfoCell", for: indexPath) as UITableViewCell
-        
-        // set the text from the data model
-        cell.textLabel?.text = files[indexPath.row].name!
-        cell.detailTextLabel?.text = "\(files[indexPath.row].modifiedTime!.stringValue)"
-        return cell
-    }
-    
+
     // MARK: - Table Delegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        let file = self.files[indexPath.row]
+        let file = self.viewModel.getFile(index:indexPath.row)
         NotificationCenter.default.post(
             name: .actionNotification,
             object: Action.fileSelected,
             userInfo: ["file":file])
-    }
-    
-    // MARK: - Google Service Drive callback
-    @objc func displayResultWithTicket(ticket: GTLRServiceTicket,
-                                       finishedWithObject result : GTLRDrive_FileList,
-                                       error : NSError?) {
-        
-        SVProgressHUD.dismiss()
-        if let error = error {
-            showAlert(title: "Error", message: error.localizedDescription)
-            return
-        }
-        self.files.removeAll()
-        let data = result.files!
-        for row in data {
-            let file:GTLRDrive_File = row
-            if file.mimeType!.hasSuffix(".spreadsheet") {
-               self.files.append(file)
-            }
-        }
-        self.tableView.reloadData()
     }
 }

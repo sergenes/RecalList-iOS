@@ -12,6 +12,8 @@ import GoogleAPIClientForREST
 extension Notification.Name {
     static let dataDownloadCompleted = Notification.Name(
         rawValue: "com.nes.dataDownloadCompleted")
+    static let filesDownloadCompleted = Notification.Name(
+        rawValue: "com.nes.filesDownloadCompleted")
     static let actionNotification = Notification.Name(
         rawValue: "com.nes.actionNotification")
     static let googleAuthUINotification = Notification.Name(

@@ -8,7 +8,7 @@
 
 import UIKit
 import SVProgressHUD
-import GoogleSignIn
+//import GoogleSignIn
 import GoogleAPIClientForREST
 
 
@@ -19,12 +19,12 @@ enum Action {
     case backFromCards
 }
 
-class AppNavigator: NSObject {
+class AppNavigator: NSObject, AppAPIInjector {
     fileprivate var window: UIWindow
     fileprivate let navigationController:UINavigationController
     
     // MARK: - Google Sheets and Drive Services config
-    private let scopes = [kGTLRAuthScopeSheetsDrive, kGTLRAuthScopeSheetsSpreadsheets, kGTLRAuthScopeDrive]
+//    private let scopes = [kGTLRAuthScopeSheetsDrive, kGTLRAuthScopeSheetsSpreadsheets, kGTLRAuthScopeDrive]
     
     init(with window:UIWindow) {
         self.window = window
@@ -54,16 +54,17 @@ class AppNavigator: NSObject {
         window.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil)
             .instantiateViewController(withIdentifier: "launchScreen")
         window.makeKeyAndVisible()
-        GIDSignIn.sharedInstance().scopes = scopes
+//        GIDSignIn.sharedInstance().scopes = scopes
         BG {
             Thread.sleep(forTimeInterval: 2)
-            if GIDSignIn.sharedInstance().hasAuthInKeychain() {
+            
+            if self.appAPI.isSignedIn() {
                 UI {
                     NotificationCenter.default.addObserver(self,
                                                            selector: #selector(self.receiveToggleAuthUINotification(_:)),
                                                            name: .googleAuthUINotification,
                                                            object: nil)
-                    GIDSignIn.sharedInstance().signInSilently()
+                    self.appAPI.requestSignInSilently()
                 }
             }else{
                 self.showAuthentication()

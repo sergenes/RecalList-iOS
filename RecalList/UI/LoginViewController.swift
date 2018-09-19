@@ -8,11 +8,10 @@
 
 import UIKit
 import GoogleSignIn
-import GoogleAPIClientForREST
 import SVProgressHUD
 
 
-class LoginViewController: UIViewController, GIDSignInUIDelegate {
+class LoginViewController: UIViewController, GIDSignInUIDelegate, AppAPIInjector {
     
     @IBOutlet weak var signInButton: UIButton!
     
@@ -20,16 +19,13 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
         super.viewDidLoad()
         
     }
-
     
     @IBAction func pressLoginButton(_ sender: Any) {
-        GIDSignIn.sharedInstance().uiDelegate = self
-        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(receiveToggleAuthUINotification(_:)),
                                                name: .googleAuthUINotification,
                                                object: nil)
-        GIDSignIn.sharedInstance()?.signIn()
+        appAPI.requestSignIn(uiDeligate: self)
     }
     
     deinit {

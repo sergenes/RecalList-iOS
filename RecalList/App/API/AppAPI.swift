@@ -31,7 +31,7 @@ protocol AppAPIServiceDelegate:AppAPIDelegate {
 class AppAPI: NSObject {
     private let scopes = [kGTLRAuthScopeSheetsDrive, kGTLRAuthScopeSheetsSpreadsheets, kGTLRAuthScopeDrive]
     private let service = GTLRSheetsService()
-    private var delegate:AppAPIDelegate?
+    var delegate:AppAPIDelegate?
     
     fileprivate override init() {
         super.init()
@@ -114,7 +114,7 @@ class AppAPI: NSObject {
         }
         //        nprint("\(result)")
         NotificationCenter.default.post(name: .dataDownloadCompleted,
-                                        object: result,
+                                        object: nil,
                                         userInfo: ["Message":"Ok"])
     }
 
