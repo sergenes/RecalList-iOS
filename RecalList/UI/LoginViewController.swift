@@ -16,8 +16,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
     
     @IBOutlet weak var signInButton: UIButton!
     
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,8 +51,10 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
                         sleep(1)
                     }
                     UI {
-                        self.appDelegate.appScreensManager?.showFiles()
-//                        self.performSegue(withIdentifier: "segueShowFiles", sender: nil)
+                        NotificationCenter.default.post(
+                            name: .actionNotification,
+                            object: Action.logedIn,
+                            userInfo: nil)
                     }
                 }
             }else{

@@ -21,7 +21,7 @@
 		1E7EB5E121518E1A00931C35 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E391113214C6DD200382E8D /* LaunchScreen.storyboard */; };
 		1E9D2B8A214DBFC4000A87C8 /* CardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1E9D2B88214DBFC3000A87C8 /* CardView.xib */; };
 		1E9D2B8B214DBFC4000A87C8 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D2B89214DBFC4000A87C8 /* CardView.swift */; };
-		1E9D2B92214F262D000A87C8 /* AppScreensManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D2B91214F262D000A87C8 /* AppScreensManager.swift */; };
+		1E9D2B92214F262D000A87C8 /* AppNavigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D2B91214F262D000A87C8 /* AppNavigator.swift */; };
 		1E9D2B98214F41AE000A87C8 /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E9D2B97214F41AE000A87C8 /* Auth.storyboard */; };
 		1E9D2B9A214FE3C0000A87C8 /* FlowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D2B99214FE3C0000A87C8 /* FlowController.swift */; };
 		1E9D2B9C214FF42E000A87C8 /* CardsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D2B9B214FF42E000A87C8 /* CardsViewModel.swift */; };
@@ -69,7 +69,7 @@
 		1E7EB5D721514EA800931C35 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1E9D2B88214DBFC3000A87C8 /* CardView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CardView.xib; sourceTree = "<group>"; };
 		1E9D2B89214DBFC4000A87C8 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
-		1E9D2B91214F262D000A87C8 /* AppScreensManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppScreensManager.swift; sourceTree = "<group>"; };
+		1E9D2B91214F262D000A87C8 /* AppNavigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigator.swift; sourceTree = "<group>"; };
 		1E9D2B97214F41AE000A87C8 /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
 		1E9D2B99214FE3C0000A87C8 /* FlowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowController.swift; sourceTree = "<group>"; };
 		1E9D2B9B214FF42E000A87C8 /* CardsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsViewModel.swift; sourceTree = "<group>"; };
@@ -199,18 +199,18 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
-		1E7EB5DF21516C9C00931C35 /* Screen Manager */ = {
+		1E7EB5DF21516C9C00931C35 /* Navigator */ = {
 			isa = PBXGroup;
 			children = (
-				1E9D2B91214F262D000A87C8 /* AppScreensManager.swift */,
+				1E9D2B91214F262D000A87C8 /* AppNavigator.swift */,
 			);
-			path = "Screen Manager";
+			path = Navigator;
 			sourceTree = "<group>";
 		};
 		1E9D2B8C214F2266000A87C8 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				1E7EB5DF21516C9C00931C35 /* Screen Manager */,
+				1E7EB5DF21516C9C00931C35 /* Navigator */,
 				1E39110A214C6DD100382E8D /* AppDelegate.swift */,
 				1E9D2B99214FE3C0000A87C8 /* FlowController.swift */,
 			);
@@ -498,7 +498,7 @@
 			files = (
 				1E9D2B8B214DBFC4000A87C8 /* CardView.swift in Sources */,
 				1E39110D214C6DD100382E8D /* LoginViewController.swift in Sources */,
-				1E9D2B92214F262D000A87C8 /* AppScreensManager.swift in Sources */,
+				1E9D2B92214F262D000A87C8 /* AppNavigator.swift in Sources */,
 				1E9D2B9C214FF42E000A87C8 /* CardsViewModel.swift in Sources */,
 				1E9D2BA12150A45B000A87C8 /* CardsDataSource.swift in Sources */,
 				1E9D2B9A214FE3C0000A87C8 /* FlowController.swift in Sources */,

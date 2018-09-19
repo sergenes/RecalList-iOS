@@ -11,16 +11,28 @@ import SVProgressHUD
 import GoogleSignIn
 import GoogleAPIClientForREST
 
-class AppScreensManager: NSObject {
+enum Action {
+    case logedIn
+    case logedOut
+    case fileSelected
+    case backFromCards
+}
+
+class AppNavigator: NSObject {
     fileprivate var window: UIWindow
     fileprivate let navigationController:UINavigationController
     
     init(with window:UIWindow) {
         self.window = window
-        self.navigationController = UINavigationController()//window.rootViewController as! UINavigationController
+        self.navigationController = UINavigationController()
         super.init()
         
         self.navigationController.navigationBar.isHidden = true
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.onActionReceived(_:)),
+                                               name: .actionNotification,
+                                               object: nil)
     }
     
     deinit {
@@ -28,17 +40,20 @@ class AppScreensManager: NSObject {
         NotificationCenter.default.removeObserver(self,
                                                   name: .googleAuthUINotification,
                                                   object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: .actionNotification,
+                                                  object: nil)
     }
     
     func start() {
         nprint("start...")
-        window.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil).instantiateViewController(withIdentifier: "launchScreen")
+        window.rootViewController = UIStoryboard.init(name: "LaunchScreen", bundle: nil)
+            .instantiateViewController(withIdentifier: "launchScreen")
         window.makeKeyAndVisible()
         BG {
             Thread.sleep(forTimeInterval: 2)
             if GIDSignIn.sharedInstance().hasAuthInKeychain() {
                 UI {
-                    
                     NotificationCenter.default.addObserver(self,
                                                            selector: #selector(self.receiveToggleAuthUINotification(_:)),
                                                            name: .googleAuthUINotification,
@@ -52,12 +67,13 @@ class AppScreensManager: NSObject {
         SVProgressHUD.show()
     }
     
-    func back() {
+    fileprivate func back() {
         self.navigationController.popViewController(animated: true)
     }
     
-    func afterLogOutNavigation(){
-        if !(self.navigationController.viewControllers[self.navigationController.viewControllers.count - 2] is LoginViewController) {
+    fileprivate func afterLogOutNavigation(){
+        let count = self.navigationController.viewControllers.count
+        if  count < 2 || !(self.navigationController.viewControllers[count - 2] is LoginViewController) {
             let authStoryboard = UIStoryboard.init(name: "Auth", bundle: nil)
             let lvc:LoginViewController = authStoryboard.instantiateViewController(withIdentifier: "loginViewController") as! LoginViewController
             self.navigationController.viewControllers.insert(lvc, at: self.navigationController.viewControllers.count - 1)
@@ -65,7 +81,7 @@ class AppScreensManager: NSObject {
         self.navigationController.popViewController(animated: true)
     }
     
-    func showCards(file:GTLRDrive_File) {
+    fileprivate func showCards(file:GTLRDrive_File) {
         nprint("showCards...")
         UI {
             let mainStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
@@ -77,7 +93,7 @@ class AppScreensManager: NSObject {
         }
     }
     
-    func showFiles() {
+    fileprivate func showFiles() {
         nprint("showFiles...")
         UI {
             let mainStoryboard = UIStoryboard.init(name: "Main", bundle: nil)
@@ -97,7 +113,7 @@ class AppScreensManager: NSObject {
         }
     }
     
-    func showAuthentication() {
+    fileprivate func showAuthentication() {
         nprint("showAuthentication...")
         UI {
             let authStoryboard = UIStoryboard.init(name: "Auth", bundle: nil)
@@ -128,5 +144,28 @@ class AppScreensManager: NSObject {
         }
     }
     
+    @objc func onActionReceived(_ notification: NSNotification) {
+        if notification.equal(name:.actionNotification) {
+            if notification.object != nil {
+                guard let action = notification.object as? Action else { return }
+                
+                switch action {
+                    case .logedIn:
+                        showFiles()
+                        break
+                    case .logedOut:
+                        afterLogOutNavigation()
+                        break
+                    case .fileSelected:
+                        let file:GTLRDrive_File = notification.userInfo?["file"] as! GTLRDrive_File
+                        showCards(file: file)
+                        break
+                    case .backFromCards:
+                        back()
+                }
+                
+            }
+        }
+    }
 }
 

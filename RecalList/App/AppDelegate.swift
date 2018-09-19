@@ -16,11 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     private let scopes = [kGTLRAuthScopeSheetsDriveReadonly, kGTLRAuthScopeSheetsSpreadsheetsReadonly, kGTLRAuthScopeDrive]
     
     var window: UIWindow?
-    var appScreensManager:AppScreensManager?
+    var appScreensManager:AppNavigator?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        appScreensManager = AppScreensManager(with: window!)
+        appScreensManager = AppNavigator(with: window!)
         
         // Initialize sign-in
         GIDSignIn.sharedInstance().clientID = Secrets.CLIENT_ID
