@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.13.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.9"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -40,13 +40,28 @@
                                 <action selector="pressBack:" destination="Sa1-oJ-dTg" eventType="touchUpInside" id="yWM-cx-iOf"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JJO-OG-28T">
+                            <rect key="frame" x="232" y="327" width="125" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="Vir-sQ-2gR"/>
+                                <constraint firstAttribute="width" constant="125" id="e0j-cA-rsJ"/>
+                            </constraints>
+                            <state key="normal" title="mark as learned">
+                                <color key="titleColor" red="0.0048598507420000003" green="0.096086271109999996" blue="0.57499289509999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="pressMarkAsLearned:" destination="Sa1-oJ-dTg" eventType="touchUpInside" id="zdr-RV-j1a"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <constraints>
+                        <constraint firstItem="fkL-JH-NTR" firstAttribute="bottom" secondItem="JJO-OG-28T" secondAttribute="bottom" constant="8" id="4BK-Nv-Dxw"/>
                         <constraint firstItem="D5t-D0-tDg" firstAttribute="top" secondItem="fkL-JH-NTR" secondAttribute="top" id="7GO-3x-Or9"/>
                         <constraint firstItem="D5t-D0-tDg" firstAttribute="trailing" secondItem="fkL-JH-NTR" secondAttribute="trailing" id="Dns-jx-7m8"/>
                         <constraint firstItem="fkL-JH-NTR" firstAttribute="bottom" secondItem="Ee3-0g-Vk0" secondAttribute="bottom" constant="8" id="Lhy-3f-3yc"/>
                         <constraint firstItem="Ee3-0g-Vk0" firstAttribute="leading" secondItem="fkL-JH-NTR" secondAttribute="leading" constant="8" id="fWA-z9-Ahq"/>
+                        <constraint firstItem="JJO-OG-28T" firstAttribute="trailing" secondItem="Bk3-en-Dtr" secondAttribute="trailingMargin" id="ht1-10-1IW"/>
                         <constraint firstItem="D5t-D0-tDg" firstAttribute="leading" secondItem="fkL-JH-NTR" secondAttribute="leading" id="qJE-sT-lZi"/>
                     </constraints>
                     <viewLayoutGuide key="safeArea" id="fkL-JH-NTR"/>

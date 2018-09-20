@@ -28,7 +28,7 @@ protocol AppAPIServiceDelegate:AppAPIDelegate {
 }
 
 class AppAPI: NSObject {
-    private let scopes = [kGTLRAuthScopeSheetsDrive, kGTLRAuthScopeSheetsSpreadsheets, kGTLRAuthScopeDrive]
+
     private let service = GTLRSheetsService()
     var delegate:AppAPIDelegate?
     
@@ -47,12 +47,48 @@ class AppAPI: NSObject {
         }
     }
     
+    func requestMarkAsKnownACard(card:Card, selectedFile:GTLRDrive_File, delegate:AppAPIDelegate) {
+        self.delegate = delegate
+        self.service.authorizer = GIDSignIn.sharedInstance().currentUser.authentication.fetcherAuthorizer()
+        
+        if let spreadsheetId = selectedFile.identifier {
+            let cardIndex:Int = card.index + 1
+            let range = "Phrasebook!E\(cardIndex):E\(cardIndex)"
+            let valueRange = GTLRSheets_ValueRange()
+            valueRange.range = "Phrasebook!E\(cardIndex):E\(cardIndex)"
+            valueRange.values = [["\(-1)"]]
+            valueRange.majorDimension = "COLUMNS"
+            
+            let query = GTLRSheetsQuery_SpreadsheetsValuesUpdate.query(withObject: valueRange, spreadsheetId: spreadsheetId, range:range)
+            query.valueInputOption = "USER_ENTERED"
+//            service.executeQuery(query, delegate: self, didFinish:#selector(updateCallbackWithTicket(ticket:finishedWithObject:error:)))
+            
+            service.executeQuery(query) { (ticket, response, error) in
+               //nprint(response)
+                if let error = error {
+                    NotificationCenter.default.post(name: .googleUpdateNotification,
+                                                    object: nil,
+                                                    userInfo: ["Error": error])
+                    return
+                }
+                let r:GTLRSheets_UpdateValuesResponse = response as! GTLRSheets_UpdateValuesResponse
+                
+                nprint("updated->\(r.spreadsheetId!)")
+                
+                NotificationCenter.default.post(name: .dataDownloadCompleted,
+                                                object: nil,
+                                                userInfo: ["Message":"Ok"])
+            
+            }
+        }
+    }
+    
     func requestUpdateACard(card:Card, selectedFile:GTLRDrive_File, delegate:AppAPIDelegate) {
         self.delegate = delegate
         self.service.authorizer = GIDSignIn.sharedInstance().currentUser.authentication.fetcherAuthorizer()
         
         if let spreadsheetId = selectedFile.identifier {
-            let cardIndex:Int = card.index+1
+            let cardIndex:Int = card.index + 1
             let range = "Phrasebook!E\(cardIndex):E\(cardIndex)"
             let valueRange = GTLRSheets_ValueRange()
             valueRange.range = "Phrasebook!E\(cardIndex):E\(cardIndex)"
@@ -62,6 +98,11 @@ class AppAPI: NSObject {
             let query = GTLRSheetsQuery_SpreadsheetsValuesUpdate.query(withObject: valueRange, spreadsheetId: spreadsheetId, range:range)
             query.valueInputOption = "USER_ENTERED"
             service.executeQuery(query, delegate: self, didFinish:#selector(updateCallbackWithTicket(ticket:finishedWithObject:error:)))
+            
+//            service.executeQuery(query) { (ticket, response, error) in
+//                print(response)
+//
+//            }
         }
     }
     
@@ -108,8 +149,10 @@ class AppAPI: NSObject {
             cards.append(Card(index: cards.count, word: word, translation: translation, from: from, to:to, peeped: peeped))
         }
         cards = cards.sorted(by: { $0.peeped > $1.peeped })
-        for card in cards{
-           (self.delegate as! AppAPIServiceDelegate).appendCard(card:card)
+        for card in cards {
+            if card.peeped > -1 {
+               (self.delegate as! AppAPIServiceDelegate).appendCard(card:card)
+            }
         }
         //        nprint("\(result)")
         NotificationCenter.default.post(name: .dataDownloadCompleted,

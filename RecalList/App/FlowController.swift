@@ -30,6 +30,7 @@ extension NSNotification {
 
 protocol CardsScreenProtocol{
     func peepTranslation(index:Int)
+    func markAsLearned(index:Int)
     func sayWord(index:Int)
     func getCardsCount()->Int
     func getDirection()->Int

@@ -58,13 +58,22 @@ class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppA
         return wordsArray[index]
     }
     
+    func getCardByIndex(index:Int)->Card? {
+        for card in wordsArray {
+            if card.index == index {
+                return card
+            }
+        }
+        return nil
+    }
+    
     func getFirstCard()->Card {
         return wordsArray[0]
     }
     
     // MARK: - CardsScreenProtocol
     func sayWord(index: Int) {
-        let card = wordsArray[index]
+        guard let card = getCardByIndex(index: index) else { return }
         let utterance = AVSpeechUtterance(string: card.word)
         if card.from.hasPrefix("Russian") {
             utterance.voice = AVSpeechSynthesisVoice(language: "ru-RU")
@@ -88,8 +97,15 @@ class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppA
     
     // MARK: - CardsScreenProtocol
     func peepTranslation(index:Int){
-        let card = wordsArray[index]
+        guard let card = getCardByIndex(index: index) else { return }
         card.peeped = card.peeped + 1
         appAPI.requestUpdateACard(card: card, selectedFile: selectedFile, delegate: self)
+    }
+    
+    // MARK: - CardsScreenProtocol
+    func markAsLearned(index: Int) {
+        guard let card = getCardByIndex(index: index) else { return }
+        card.peeped = -1
+        appAPI.requestMarkAsKnownACard(card: card, selectedFile: selectedFile, delegate: self)
     }
 }

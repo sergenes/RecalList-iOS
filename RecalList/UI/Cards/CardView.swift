@@ -18,6 +18,9 @@ public class CardView: UIView {
     @IBOutlet weak var frontLabel: UILabel!
     @IBOutlet weak var backLabel: UILabel!
     
+    private var markedAsLearned = false
+    private var backUpColor:UIColor?
+    
     func setup(card: Card, index:Int, cardsScreen: CardsScreenProtocol) {
         self.cardsScreen = cardsScreen
         
@@ -42,9 +45,9 @@ public class CardView: UIView {
     @IBAction func pressTranslate(_ sender: UIButton) {
         UIView.transition(from: self.frontView, to: self.backView, duration: 1, options: [.transitionFlipFromBottom, .showHideTransitionViews], completion: nil)
         self.backView.translatesAutoresizingMaskIntoConstraints = false
+        
         cardsScreen.peepTranslation(index: self.tag)
     }
-    
     
     @IBAction func pressBack(_ sender: UIButton) {
         UIView.transition(from: self.backView, to: self.frontView, duration: 1, options: [.transitionFlipFromBottom, .showHideTransitionViews], completion: nil)
@@ -53,6 +56,20 @@ public class CardView: UIView {
     
     @IBAction func pressSay(_ sender: Any) {
         cardsScreen.sayWord(index: self.tag)
+    }
+    
+    @IBAction func pressMarkAsLearned(_ sender: UIButton) {
+        if markedAsLearned {
+            markedAsLearned = false
+            cardsScreen.markAsLearned(index: self.tag)
+            setColor(color:backUpColor!)
+        }else{
+            backUpColor = self.backgroundColor
+            markedAsLearned = true
+            cardsScreen.markAsLearned(index: self.tag)
+            setColor(color: .pink)
+        }
+        pressBack(sender)
     }
     
     func setColor(color:UIColor){
