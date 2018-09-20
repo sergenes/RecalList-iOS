@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		06CCFEC8F0DA9539E69F894E /* Pods_RecalListUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871B02CB2F5453A93AA4ED8B /* Pods_RecalListUITests.framework */; };
+		1E1EDBCA2153FAA5008DB5AE /* ObjcTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E1EDBC92153FAA5008DB5AE /* ObjcTools.m */; };
 		1E39110B214C6DD100382E8D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E39110A214C6DD100382E8D /* AppDelegate.swift */; };
 		1E39110D214C6DD100382E8D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E39110C214C6DD100382E8D /* LoginViewController.swift */; };
 		1E391112214C6DD200382E8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E391111214C6DD200382E8D /* Assets.xcassets */; };
@@ -56,6 +57,9 @@
 
 /* Begin PBXFileReference section */
 		1E1EDBC42153D6F4008DB5AE /* add_url_scheme.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = add_url_scheme.sh; sourceTree = "<group>"; };
+		1E1EDBC72153FAA5008DB5AE /* RecalList-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RecalList-Bridging-Header.h"; sourceTree = "<group>"; };
+		1E1EDBC82153FAA5008DB5AE /* ObjcTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjcTools.h; sourceTree = "<group>"; };
+		1E1EDBC92153FAA5008DB5AE /* ObjcTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ObjcTools.m; sourceTree = "<group>"; };
 		1E391107214C6DD100382E8D /* RecalList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecalList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E39110A214C6DD100382E8D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1E39110C214C6DD100382E8D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -197,6 +201,9 @@
 				1E391111214C6DD200382E8D /* Assets.xcassets */,
 				1EADB873214D867A00C0B133 /* Utils.swift */,
 				1E9D2B9D215070AE000A87C8 /* Dynamic.swift */,
+				1E1EDBC82153FAA5008DB5AE /* ObjcTools.h */,
+				1E1EDBC92153FAA5008DB5AE /* ObjcTools.m */,
+				1E1EDBC72153FAA5008DB5AE /* RecalList-Bridging-Header.h */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -359,6 +366,12 @@
 				TargetAttributes = {
 					1E391106214C6DD100382E8D = {
 						CreatedOnToolsVersion = 10.0;
+						LastSwiftMigration = 1000;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					1E39111A214C6DD200382E8D = {
 						CreatedOnToolsVersion = 10.0;
@@ -555,6 +568,7 @@
 				1E9D2B92214F262D000A87C8 /* AppNavigator.swift in Sources */,
 				1E7EB5E4215287D500931C35 /* AppAPI.swift in Sources */,
 				1E9D2B9C214FF42E000A87C8 /* CardsViewModel.swift in Sources */,
+				1E1EDBCA2153FAA5008DB5AE /* ObjcTools.m in Sources */,
 				1E9D2BA12150A45B000A87C8 /* CardsDataSource.swift in Sources */,
 				1E9D2B9A214FE3C0000A87C8 /* FlowController.swift in Sources */,
 				1E61567F214D6F6B00A2BFAE /* Secrets.swift in Sources */,
@@ -740,6 +754,7 @@
 			baseConfigurationReference = 3D3A4BE40C1B33D646B44D59 /* Pods-RecalList.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2ZHU68F9DV;
 				INFOPLIST_FILE = RecalList/Info.plist;
@@ -749,6 +764,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nes.recallist.RecalList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "RecalList/Support/RecalList-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -759,6 +776,7 @@
 			baseConfigurationReference = 7FC763F88CABBF1950357B48 /* Pods-RecalList.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2ZHU68F9DV;
 				INFOPLIST_FILE = RecalList/Info.plist;
@@ -768,6 +786,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.nes.recallist.RecalList;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "RecalList/Support/RecalList-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

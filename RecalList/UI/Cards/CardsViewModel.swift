@@ -29,8 +29,14 @@ public class Card {
     }
 }
 
-class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppAPIInjector {
+protocol SpeakerEventsDelegate {
+    func done()
+}
+
+class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppAPIInjector, AVSpeechSynthesizerDelegate {
     var selectedSegmentIndex:Int = 0
+    var currentCard = 0
+    var currentWord = 0
 //    typealias CardsListReadyCompletion = (String) -> Void
 //    
 //    func cardsListReady(completion: @escaping CardsListReadyCompletion) {
@@ -38,6 +44,7 @@ class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppA
 //    }
     let synth = AVSpeechSynthesizer()
     let selectedFile:GTLRDrive_File
+    var speakerEventsDelegate:SpeakerEventsDelegate? = nil
     
     // MARK: - AppAPIServiceDelegate
     internal var wordsArray:Array<Card> = []
@@ -52,6 +59,63 @@ class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppA
         super.init()
         wordsArray.removeAll()
         appAPI.requestCards(selectedFile: selectedFile, delegate: self)
+        ObjcTools.setupAudioSession()
+        synth.delegate = self
+    }
+    
+    public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance){
+        
+        if currentWord == 0 {
+            currentWord = 1
+            Thread.sleep(forTimeInterval: 0.5)
+        }else {
+            currentWord = 0
+            if currentCard < wordsArray.count - 1 {
+                currentCard = currentCard + 1
+            }else{
+                currentCard = 0
+            }
+            Thread.sleep(forTimeInterval:1.5)
+            speakerEventsDelegate?.done()
+        }
+        sayBothWords(index: currentCard, direction: currentWord)
+    }
+    
+    func sayBothWords(index: Int, direction:Int) {
+        if synth.delegate == nil {
+           synth.delegate = self
+        }
+        currentCard = index
+        let card = getCard(index: index)
+        var wordToSay = card.word
+        var voice:AVSpeechSynthesisVoice!
+        if card.from.hasPrefix("Russian") {
+            voice = AVSpeechSynthesisVoice(language: "ru-RU")
+        } else if card.from.hasPrefix("Hebrew") {
+            voice = AVSpeechSynthesisVoice(language: "he-IL")
+        } else{
+             voice = AVSpeechSynthesisVoice(language: "en-US")
+        }
+        if direction==1 {
+            wordToSay = card.translation
+            if card.to.hasPrefix("Russian") {
+                voice = AVSpeechSynthesisVoice(language: "ru-RU")
+            } else if card.to.hasPrefix("Hebrew") {
+                voice = AVSpeechSynthesisVoice(language: "he-IL")
+            } else{
+                voice = AVSpeechSynthesisVoice(language: "en-US")
+            }
+        }
+        
+        let utterance = AVSpeechUtterance(string: wordToSay)
+        utterance.voice = voice
+        
+        synth.speak(utterance)
+    }
+    
+    func stop(){
+       synth.stopSpeaking(at: .word)
+       synth.delegate = nil
     }
     
     func getCard(index:Int)->Card{
@@ -73,6 +137,7 @@ class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppA
     
     // MARK: - CardsScreenProtocol
     func sayWord(index: Int) {
+        synth.delegate = nil
         guard let card = getCardByIndex(index: index) else { return }
         let utterance = AVSpeechUtterance(string: card.word)
         if card.from.hasPrefix("Russian") {

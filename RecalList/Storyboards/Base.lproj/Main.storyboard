@@ -154,23 +154,45 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DPo-C1-64l" customClass="KolodaView" customModule="Koloda">
-                                <rect key="frame" x="16" y="147" width="343" height="500"/>
+                                <rect key="frame" x="16" y="147" width="343" height="476"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bly-4e-3hd">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Bkj-N2-FSx"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem tag="100" systemItem="play" id="luN-D2-iaF">
+                                        <connections>
+                                            <action selector="pressPlayPouseButton:" destination="jlE-sm-eKN" id="ejC-cu-xn3"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="81f-N4-M1C"/>
+                                    <barButtonItem tag="100" title="speaker" id="AyP-sA-B4p">
+                                        <connections>
+                                            <action selector="pressSourceButton:" destination="jlE-sm-eKN" id="GeJ-k9-94a"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="JTg-9E-Bld" firstAttribute="trailing" secondItem="clr-MN-Wax" secondAttribute="trailing" constant="16" id="3wj-MT-Zxs"/>
-                            <constraint firstItem="DPo-C1-64l" firstAttribute="top" secondItem="qVi-t3-ZCf" secondAttribute="bottom" constant="31" id="6xc-ec-mzA"/>
-                            <constraint firstItem="JTg-9E-Bld" firstAttribute="bottom" secondItem="DPo-C1-64l" secondAttribute="bottom" constant="20" id="KBl-i4-Ir9"/>
+                            <constraint firstItem="Bly-4e-3hd" firstAttribute="trailing" secondItem="JTg-9E-Bld" secondAttribute="trailing" id="7sz-bO-HYL"/>
+                            <constraint firstItem="DPo-C1-64l" firstAttribute="top" secondItem="qVi-t3-ZCf" secondAttribute="bottom" constant="31" id="BKb-gQ-LNc"/>
+                            <constraint firstItem="Bly-4e-3hd" firstAttribute="bottom" secondItem="JTg-9E-Bld" secondAttribute="bottom" id="De3-g0-oU3"/>
+                            <constraint firstItem="Bly-4e-3hd" firstAttribute="top" secondItem="DPo-C1-64l" secondAttribute="bottom" id="OX8-rI-VyM"/>
+                            <constraint firstItem="Bly-4e-3hd" firstAttribute="leading" secondItem="JTg-9E-Bld" secondAttribute="leading" id="QFz-F1-oBV"/>
                             <constraint firstItem="clr-MN-Wax" firstAttribute="leading" secondItem="JTg-9E-Bld" secondAttribute="leading" constant="16" id="UKy-YC-lmn"/>
                             <constraint firstItem="qVi-t3-ZCf" firstAttribute="top" secondItem="clr-MN-Wax" secondAttribute="bottom" constant="8" id="X1D-cJ-YjP"/>
+                            <constraint firstItem="DPo-C1-64l" firstAttribute="leading" secondItem="JTg-9E-Bld" secondAttribute="leading" constant="16" id="Xkw-nj-3bR"/>
                             <constraint firstItem="QaZ-on-vLW" firstAttribute="leading" secondItem="JTg-9E-Bld" secondAttribute="leading" id="ZuW-c5-gsS"/>
-                            <constraint firstItem="JTg-9E-Bld" firstAttribute="trailing" secondItem="DPo-C1-64l" secondAttribute="trailing" constant="16" id="dqV-jn-eY6"/>
+                            <constraint firstItem="JTg-9E-Bld" firstAttribute="trailing" secondItem="DPo-C1-64l" secondAttribute="trailing" constant="16" id="ebw-Uk-wgZ"/>
                             <constraint firstItem="qVi-t3-ZCf" firstAttribute="centerX" secondItem="fb9-If-Aqi" secondAttribute="centerX" id="gvF-Ct-R5J"/>
                             <constraint firstItem="QaZ-on-vLW" firstAttribute="top" secondItem="JTg-9E-Bld" secondAttribute="top" id="oGc-Vz-8Jy"/>
                             <constraint firstItem="clr-MN-Wax" firstAttribute="top" secondItem="JTg-9E-Bld" secondAttribute="top" id="uhN-gv-Sbq"/>
-                            <constraint firstItem="DPo-C1-64l" firstAttribute="leading" secondItem="JTg-9E-Bld" secondAttribute="leading" constant="16" id="zMo-tg-HtN"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JTg-9E-Bld"/>
                     </view>
@@ -183,7 +205,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ag8-2O-f9B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1318" y="134"/>
+            <point key="canvasLocation" x="1317.5999999999999" y="133.5832083958021"/>
         </scene>
     </scenes>
 </document>

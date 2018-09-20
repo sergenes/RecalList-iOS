@@ -11,9 +11,12 @@ import UIKit
 import GoogleAPIClientForREST
 import Koloda
 import SVProgressHUD
+import MediaPlayer
 
 
-class CardsViewController: UIViewController, KolodaViewDelegate {
+class CardsViewController: UIViewController, KolodaViewDelegate, SpeakerEventsDelegate {
+
+    
     
     var selectedFile:GTLRDrive_File?
     var cardsDataSource:CardsDataSource?
@@ -59,6 +62,39 @@ class CardsViewController: UIViewController, KolodaViewDelegate {
         SVProgressHUD.dismiss()
     }
     
+    // MARK: - SpeakerEventsDelegate
+    func done() {
+        self.kolodaView.swipe(.left, force: true)
+    }
+    
+    
+    @IBAction func pressSourceButton(_ sender: UIBarButtonItem) {
+        if sender.tag == 100 {
+            sender.tag = 200
+            sender.title = "headset"
+            ObjcTools.chooseSource(1)
+        }else{
+            sender.tag = 100
+            sender.title = "speaker"
+            ObjcTools.chooseSource(0)
+        }
+    }
+    
+    @IBAction func pressPlayPouseButton(_ sender: UIBarButtonItem) {
+        if viewModel.speakerEventsDelegate == nil {
+           viewModel.speakerEventsDelegate = self
+        }
+        if sender.tag == 100 {
+           sender.tag = 200
+            let index = self.kolodaView.currentCardIndex
+            viewModel.sayBothWords(index: index, direction: 0)
+        }else{
+            sender.tag = 100
+            viewModel.stop()
+        }
+        
+    }
+    
     @IBAction func pressBack(_ sender: UIButton) {
         NotificationCenter.default.post(
             name: .actionNotification,
@@ -74,6 +110,7 @@ class CardsViewController: UIViewController, KolodaViewDelegate {
     
      // MARK: - KolodaViewDelegate
     func kolodaDidRunOutOfCards(_ koloda: KolodaView) {
+        koloda.resetCurrentCardIndex()
         koloda.reloadData()
     }
     
