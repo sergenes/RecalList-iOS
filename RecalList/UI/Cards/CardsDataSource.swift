@@ -9,6 +9,16 @@
 import UIKit
 import Koloda
 
+extension UIColor {
+    static let pink = UIColor.init(netHex:0xffc7c7)
+    static let green = UIColor.init(netHex:0xb2ffa1)
+    static let blue = UIColor.init(netHex:0xb6caff)
+    static let purple = UIColor.init(netHex:0xadf4ff)
+}
+
+let PAINT_IN_PINK_CONDITION = 10
+let MARKED_AS_KNOWN = -1
+
 class CardsDataSource: KolodaViewDataSource {
     private var viewModel: CardsViewModel
     
@@ -32,10 +42,14 @@ class CardsDataSource: KolodaViewDataSource {
         
         cardView.setup(card: card, index: index, cardsScreen: viewModel)
         
-        if index % 2 == 0 {
-            cardView.setColor(color: UIColor.init(netHex:0xb6caff))
+        if card.peeped > PAINT_IN_PINK_CONDITION {
+            cardView.setColor(color: .pink)//pink
+        }else if card.peeped == MARKED_AS_KNOWN {
+            cardView.setColor(color: .green)//green
+        }else if index % 2 == 0 {
+            cardView.setColor(color: .blue)//blue
         }else{
-            cardView.setColor(color: UIColor.init(netHex:0xadf4ff))
+            cardView.setColor(color: .purple)//purple
         }
         
         cardView.doRoundCorners()
