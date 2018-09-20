@@ -46,10 +46,14 @@ extension AppAPI: GIDSignInDelegate{
     
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
               withError error: Error!) {
-        nprint("didSignInFor \(String(describing: user.profile.email))")
         if let error = error {
             print("\(error.localizedDescription)")
+            NotificationCenter.default.post(
+                name: .googleAuthUINotification,
+                object: nil,
+                userInfo: ["Error": error.localizedDescription])
         } else {
+            nprint("didSignInFor \(String(describing: user.profile.email))")
             // Perform any operations on signed in user here.
             //let userId:String = user.userID                  // For client-side use only!
             //let idToken:String = user.authentication.idToken // Safe to send to the server

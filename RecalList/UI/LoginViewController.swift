@@ -39,6 +39,10 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, AppAPIInjector
         if notification.equal(name:.googleAuthUINotification) {
             if notification.userInfo != nil {
                 guard let userInfo = notification.userInfo as? [String:String] else { return }
+                if let errorMessage = userInfo["Error"] {
+                    self.showAlert(title: "Auth Error", message: errorMessage)
+                    return
+                }
                 print("receiveToggleAuthUINotification: "+userInfo["statusText"]!)
                 //wait until SFAuthenticationViewController from Google's lib will dissmissed
                 BG {
