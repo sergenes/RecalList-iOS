@@ -55,6 +55,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1E1EDBC42153D6F4008DB5AE /* add_url_scheme.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = add_url_scheme.sh; sourceTree = "<group>"; };
 		1E391107214C6DD100382E8D /* RecalList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecalList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E39110A214C6DD100382E8D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1E39110C214C6DD100382E8D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -155,6 +156,7 @@
 				1E391139214C6DF500382E8D /* Support */,
 				1E391138214C6DE100382E8D /* Storyboards */,
 				1E391116214C6DD200382E8D /* Info.plist */,
+				1E1EDBC42153D6F4008DB5AE /* add_url_scheme.sh */,
 				1E615680214D70B400A2BFAE /* credentials.plist */,
 			);
 			path = RecalList;
@@ -290,6 +292,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1E39112F214C6DD200382E8D /* Build configuration list for PBXNativeTarget "RecalList" */;
 			buildPhases = (
+				1E1EDBC12153CC48008DB5AE /* Add URL Scheme */,
 				216416931B9A0F26BAD47CE8 /* [CP] Check Pods Manifest.lock */,
 				1E391103214C6DD100382E8D /* Sources */,
 				1E391104214C6DD100382E8D /* Frameworks */,
@@ -418,6 +421,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1E1EDBC12153CC48008DB5AE /* Add URL Scheme */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Add URL Scheme";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${SRCROOT}/RecalList/add_url_scheme.sh\n";
+		};
 		1E29C90A88CEAC3E2862413B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
