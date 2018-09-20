@@ -163,7 +163,7 @@
                                     <constraint firstAttribute="height" constant="44" id="Bkj-N2-FSx"/>
                                 </constraints>
                                 <items>
-                                    <barButtonItem tag="100" systemItem="play" id="luN-D2-iaF">
+                                    <barButtonItem tag="100" title="play" id="luN-D2-iaF">
                                         <connections>
                                             <action selector="pressPlayPouseButton:" destination="jlE-sm-eKN" id="ejC-cu-xn3"/>
                                         </connections>
@@ -200,6 +200,7 @@
                     <connections>
                         <outlet property="directionSegmentedControl" destination="qVi-t3-ZCf" id="fQV-vL-IzG"/>
                         <outlet property="kolodaView" destination="DPo-C1-64l" id="VTl-jD-aqf"/>
+                        <outlet property="playButton" destination="luN-D2-iaF" id="91E-Oe-dzw"/>
                         <outlet property="titleLabel" destination="clr-MN-Wax" id="ZPE-VN-rZC"/>
                     </connections>
                 </viewController>

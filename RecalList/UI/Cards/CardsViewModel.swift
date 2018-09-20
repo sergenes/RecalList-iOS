@@ -31,6 +31,7 @@ public class Card {
 
 protocol SpeakerEventsDelegate {
     func done()
+    func pause()
 }
 
 class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppAPIInjector, AVSpeechSynthesizerDelegate {
@@ -61,6 +62,10 @@ class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppA
         appAPI.requestCards(selectedFile: selectedFile, delegate: self)
         ObjcTools.setupAudioSession()
         synth.delegate = self
+    }
+    
+    public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didPause utterance: AVSpeechUtterance){
+        speakerEventsDelegate?.pause()
     }
     
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance){

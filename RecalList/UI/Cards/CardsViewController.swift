@@ -24,6 +24,7 @@ class CardsViewController: UIViewController, KolodaViewDelegate, SpeakerEventsDe
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var kolodaView: KolodaView!
     @IBOutlet weak var directionSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var playButton: UIBarButtonItem!
     
     lazy private var viewModel: CardsViewModel = {
         return CardsViewModel(selectedFile: self.selectedFile!)
@@ -67,6 +68,10 @@ class CardsViewController: UIViewController, KolodaViewDelegate, SpeakerEventsDe
         self.kolodaView.swipe(.left, force: true)
     }
     
+    func pause() {
+        pressPlayPouseButton(playButton)
+    }
+    
     
     @IBAction func pressSourceButton(_ sender: UIBarButtonItem) {
         if sender.tag == 100 {
@@ -86,9 +91,11 @@ class CardsViewController: UIViewController, KolodaViewDelegate, SpeakerEventsDe
         }
         if sender.tag == 100 {
            sender.tag = 200
+            sender.title = "stop"
             let index = self.kolodaView.currentCardIndex
             viewModel.sayBothWords(index: index, direction: 0)
         }else{
+            sender.title = "play"
             sender.tag = 100
             viewModel.stop()
         }
