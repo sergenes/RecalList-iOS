@@ -9,6 +9,15 @@
 /* Begin PBXBuildFile section */
 		06CCFEC8F0DA9539E69F894E /* Pods_RecalListUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 871B02CB2F5453A93AA4ED8B /* Pods_RecalListUITests.framework */; };
 		1E1EDBCA2153FAA5008DB5AE /* ObjcTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E1EDBC92153FAA5008DB5AE /* ObjcTools.m */; };
+		1E1EDBD1215417F8008DB5AE /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E1EDBCF215417F8008DB5AE /* Interface.storyboard */; };
+		1E1EDBD3215417F9008DB5AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E1EDBD2215417F9008DB5AE /* Assets.xcassets */; };
+		1E1EDBDA215417F9008DB5AE /* RecalList-Watch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 1E1EDBD9215417F9008DB5AE /* RecalList-Watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1E1EDBDF215417F9008DB5AE /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1EDBDE215417F9008DB5AE /* InterfaceController.swift */; };
+		1E1EDBE1215417F9008DB5AE /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1EDBE0215417F9008DB5AE /* ExtensionDelegate.swift */; };
+		1E1EDBE3215417F9008DB5AE /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1EDBE2215417F9008DB5AE /* NotificationController.swift */; };
+		1E1EDBE5215417F9008DB5AE /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E1EDBE4215417F9008DB5AE /* ComplicationController.swift */; };
+		1E1EDBE7215417FA008DB5AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E1EDBE6215417FA008DB5AE /* Assets.xcassets */; };
+		1E1EDBEC215417FA008DB5AE /* RecalList-Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 1E1EDBCD215417F8008DB5AE /* RecalList-Watch.app */; };
 		1E39110B214C6DD100382E8D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E39110A214C6DD100382E8D /* AppDelegate.swift */; };
 		1E39110D214C6DD100382E8D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E39110C214C6DD100382E8D /* LoginViewController.swift */; };
 		1E391112214C6DD200382E8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E391111214C6DD200382E8D /* Assets.xcassets */; };
@@ -39,6 +48,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1E1EDBDB215417F9008DB5AE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1E3910FF214C6DD100382E8D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1E1EDBD8215417F9008DB5AE;
+			remoteInfo = "RecalList-Watch Extension";
+		};
+		1E1EDBEA215417FA008DB5AE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1E3910FF214C6DD100382E8D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1E1EDBCC215417F8008DB5AE;
+			remoteInfo = "RecalList-Watch";
+		};
 		1E39111C214C6DD200382E8D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 1E3910FF214C6DD100382E8D /* Project object */;
@@ -55,11 +78,48 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		1E1EDBF2215417FA008DB5AE /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				1E1EDBDA215417F9008DB5AE /* RecalList-Watch Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1E1EDBF4215417FA008DB5AE /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				1E1EDBEC215417FA008DB5AE /* RecalList-Watch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		1E1EDBC42153D6F4008DB5AE /* add_url_scheme.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = add_url_scheme.sh; sourceTree = "<group>"; };
 		1E1EDBC72153FAA5008DB5AE /* RecalList-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RecalList-Bridging-Header.h"; sourceTree = "<group>"; };
 		1E1EDBC82153FAA5008DB5AE /* ObjcTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjcTools.h; sourceTree = "<group>"; };
 		1E1EDBC92153FAA5008DB5AE /* ObjcTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ObjcTools.m; sourceTree = "<group>"; };
+		1E1EDBCD215417F8008DB5AE /* RecalList-Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RecalList-Watch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E1EDBD0215417F8008DB5AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		1E1EDBD2215417F9008DB5AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1E1EDBD4215417F9008DB5AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1E1EDBD9215417F9008DB5AE /* RecalList-Watch Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "RecalList-Watch Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E1EDBDE215417F9008DB5AE /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		1E1EDBE0215417F9008DB5AE /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		1E1EDBE2215417F9008DB5AE /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		1E1EDBE4215417F9008DB5AE /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
+		1E1EDBE6215417FA008DB5AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1E1EDBE8215417FA008DB5AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1E1EDBE9215417FA008DB5AE /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		1E391107214C6DD100382E8D /* RecalList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecalList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E39110A214C6DD100382E8D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1E39110C214C6DD100382E8D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +163,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1E1EDBD6215417F9008DB5AE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1E391104214C6DD100382E8D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -130,12 +197,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E1EDBCE215417F8008DB5AE /* RecalList-Watch */ = {
+			isa = PBXGroup;
+			children = (
+				1E1EDBCF215417F8008DB5AE /* Interface.storyboard */,
+				1E1EDBD2215417F9008DB5AE /* Assets.xcassets */,
+				1E1EDBD4215417F9008DB5AE /* Info.plist */,
+			);
+			path = "RecalList-Watch";
+			sourceTree = "<group>";
+		};
+		1E1EDBDD215417F9008DB5AE /* RecalList-Watch Extension */ = {
+			isa = PBXGroup;
+			children = (
+				1E1EDBDE215417F9008DB5AE /* InterfaceController.swift */,
+				1E1EDBE0215417F9008DB5AE /* ExtensionDelegate.swift */,
+				1E1EDBE2215417F9008DB5AE /* NotificationController.swift */,
+				1E1EDBE4215417F9008DB5AE /* ComplicationController.swift */,
+				1E1EDBE6215417FA008DB5AE /* Assets.xcassets */,
+				1E1EDBE8215417FA008DB5AE /* Info.plist */,
+				1E1EDBE9215417FA008DB5AE /* PushNotificationPayload.apns */,
+			);
+			path = "RecalList-Watch Extension";
+			sourceTree = "<group>";
+		};
 		1E3910FE214C6DD100382E8D = {
 			isa = PBXGroup;
 			children = (
 				1E391109214C6DD100382E8D /* RecalList */,
 				1E39111E214C6DD200382E8D /* RecalListTests */,
 				1E391129214C6DD200382E8D /* RecalListUITests */,
+				1E1EDBCE215417F8008DB5AE /* RecalList-Watch */,
+				1E1EDBDD215417F9008DB5AE /* RecalList-Watch Extension */,
 				1E391108214C6DD100382E8D /* Products */,
 				AD898E7A2CE0B81354DBDB73 /* Pods */,
 				288E936F83E93B096249CA94 /* Frameworks */,
@@ -148,6 +241,8 @@
 				1E391107214C6DD100382E8D /* RecalList.app */,
 				1E39111B214C6DD200382E8D /* RecalListTests.xctest */,
 				1E391126214C6DD200382E8D /* RecalListUITests.xctest */,
+				1E1EDBCD215417F8008DB5AE /* RecalList-Watch.app */,
+				1E1EDBD9215417F9008DB5AE /* RecalList-Watch Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -295,6 +390,40 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1E1EDBCC215417F8008DB5AE /* RecalList-Watch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1E1EDBF3215417FA008DB5AE /* Build configuration list for PBXNativeTarget "RecalList-Watch" */;
+			buildPhases = (
+				1E1EDBCB215417F8008DB5AE /* Resources */,
+				1E1EDBF2215417FA008DB5AE /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1E1EDBDC215417F9008DB5AE /* PBXTargetDependency */,
+			);
+			name = "RecalList-Watch";
+			productName = "RecalList-Watch";
+			productReference = 1E1EDBCD215417F8008DB5AE /* RecalList-Watch.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		1E1EDBD8215417F9008DB5AE /* RecalList-Watch Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1E1EDBF1215417FA008DB5AE /* Build configuration list for PBXNativeTarget "RecalList-Watch Extension" */;
+			buildPhases = (
+				1E1EDBD5215417F9008DB5AE /* Sources */,
+				1E1EDBD6215417F9008DB5AE /* Frameworks */,
+				1E1EDBD7215417F9008DB5AE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "RecalList-Watch Extension";
+			productName = "RecalList-Watch Extension";
+			productReference = 1E1EDBD9215417F9008DB5AE /* RecalList-Watch Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
 		1E391106214C6DD100382E8D /* RecalList */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1E39112F214C6DD200382E8D /* Build configuration list for PBXNativeTarget "RecalList" */;
@@ -306,10 +435,12 @@
 				1E391105214C6DD100382E8D /* Resources */,
 				1E29C90A88CEAC3E2862413B /* [CP] Embed Pods Frameworks */,
 				6D23261E48BE6B52CA31FA8D /* [CP] Copy Pods Resources */,
+				1E1EDBF4215417FA008DB5AE /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				1E1EDBEB215417FA008DB5AE /* PBXTargetDependency */,
 			);
 			name = RecalList;
 			productName = RecalList;
@@ -364,6 +495,12 @@
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Serge Nes";
 				TargetAttributes = {
+					1E1EDBCC215417F8008DB5AE = {
+						CreatedOnToolsVersion = 10.0;
+					};
+					1E1EDBD8215417F9008DB5AE = {
+						CreatedOnToolsVersion = 10.0;
+					};
 					1E391106214C6DD100382E8D = {
 						CreatedOnToolsVersion = 10.0;
 						LastSwiftMigration = 1000;
@@ -399,11 +536,30 @@
 				1E391106214C6DD100382E8D /* RecalList */,
 				1E39111A214C6DD200382E8D /* RecalListTests */,
 				1E391125214C6DD200382E8D /* RecalListUITests */,
+				1E1EDBCC215417F8008DB5AE /* RecalList-Watch */,
+				1E1EDBD8215417F9008DB5AE /* RecalList-Watch Extension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1E1EDBCB215417F8008DB5AE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1E1EDBD3215417F9008DB5AE /* Assets.xcassets in Resources */,
+				1E1EDBD1215417F8008DB5AE /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1E1EDBD7215417F9008DB5AE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1E1EDBE7215417FA008DB5AE /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1E391105214C6DD100382E8D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -557,6 +713,17 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1E1EDBD5215417F9008DB5AE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1E1EDBE3215417F9008DB5AE /* NotificationController.swift in Sources */,
+				1E1EDBE5215417F9008DB5AE /* ComplicationController.swift in Sources */,
+				1E1EDBE1215417F9008DB5AE /* ExtensionDelegate.swift in Sources */,
+				1E1EDBDF215417F9008DB5AE /* InterfaceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1E391103214C6DD100382E8D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -601,6 +768,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1E1EDBDC215417F9008DB5AE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1E1EDBD8215417F9008DB5AE /* RecalList-Watch Extension */;
+			targetProxy = 1E1EDBDB215417F9008DB5AE /* PBXContainerItemProxy */;
+		};
+		1E1EDBEB215417FA008DB5AE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1E1EDBCC215417F8008DB5AE /* RecalList-Watch */;
+			targetProxy = 1E1EDBEA215417FA008DB5AE /* PBXContainerItemProxy */;
+		};
 		1E39111D214C6DD200382E8D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 1E391106214C6DD100382E8D /* RecalList */;
@@ -614,6 +791,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		1E1EDBCF215417F8008DB5AE /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1E1EDBD0215417F8008DB5AE /* Base */,
+			);
+			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
 		1E391113214C6DD200382E8D /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -633,6 +818,88 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1E1EDBED215417FA008DB5AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2ZHU68F9DV;
+				IBSC_MODULE = RecalList_Watch_Extension;
+				INFOPLIST_FILE = "RecalList-Watch/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nes.recallist.RecalList.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 5.0;
+			};
+			name = Debug;
+		};
+		1E1EDBEE215417FA008DB5AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2ZHU68F9DV;
+				IBSC_MODULE = RecalList_Watch_Extension;
+				INFOPLIST_FILE = "RecalList-Watch/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.nes.recallist.RecalList.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 5.0;
+			};
+			name = Release;
+		};
+		1E1EDBEF215417FA008DB5AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2ZHU68F9DV;
+				INFOPLIST_FILE = "RecalList-Watch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nes.recallist.RecalList.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 5.0;
+			};
+			name = Debug;
+		};
+		1E1EDBF0215417FA008DB5AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 2ZHU68F9DV;
+				INFOPLIST_FILE = "RecalList-Watch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.nes.recallist.RecalList.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 5.0;
+			};
+			name = Release;
+		};
 		1E39112D214C6DD200382E8D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -881,6 +1148,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1E1EDBF1215417FA008DB5AE /* Build configuration list for PBXNativeTarget "RecalList-Watch Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1E1EDBEF215417FA008DB5AE /* Debug */,
+				1E1EDBF0215417FA008DB5AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1E1EDBF3215417FA008DB5AE /* Build configuration list for PBXNativeTarget "RecalList-Watch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1E1EDBED215417FA008DB5AE /* Debug */,
+				1E1EDBEE215417FA008DB5AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		1E391102214C6DD100382E8D /* Build configuration list for PBXProject "RecalList" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
