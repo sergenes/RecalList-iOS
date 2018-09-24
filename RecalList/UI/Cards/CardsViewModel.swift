@@ -175,7 +175,12 @@ class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppA
     // MARK: - CardsScreenProtocol
     func markAsLearned(index: Int) {
         guard let card = getCardByIndex(index: index) else { return }
-        card.peeped = -1
+        if card.peeped == -1 {
+           card.peeped = 0
+        }else {
+           card.peeped = -1
+        }
+        
         appAPI.requestMarkAsKnownACard(card: card, selectedFile: selectedFile, delegate: self)
     }
 }

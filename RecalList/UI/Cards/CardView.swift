@@ -17,6 +17,7 @@ public class CardView: UIView {
     @IBOutlet weak var countLabel: UILabel!
     @IBOutlet weak var frontLabel: UILabel!
     @IBOutlet weak var backLabel: UILabel!
+    @IBOutlet weak var markAsLearnedButton: UIButton!
     
     private var markedAsLearned = false
     private var backUpColor:UIColor?
@@ -34,6 +35,12 @@ public class CardView: UIView {
         self.tag = card.index
         
         countLabel.text = "\(index+1) of \(cardsScreen.getCardsCount())"
+        
+        if card.peeped == -1 {
+            markAsLearnedButton.setTitle("cancel", for: .normal)
+        }else{
+            markAsLearnedButton.setTitle("mark as learned", for: .normal)
+        }
     }
     
     func doRoundCorners(){
@@ -67,7 +74,12 @@ public class CardView: UIView {
             backUpColor = self.backgroundColor
             markedAsLearned = true
             cardsScreen.markAsLearned(index: self.tag)
-            setColor(color: .pink)
+            setColor(color: .green)
+        }
+        if markedAsLearned {
+            sender.setTitle("cancel", for: .normal)
+        }else{
+            sender.setTitle("mark as learned", for: .normal)
         }
         pressBack(sender)
     }

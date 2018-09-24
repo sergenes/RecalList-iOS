@@ -148,6 +148,7 @@
                 <outlet property="countLabel" destination="LGj-g0-Fen" id="aQi-UA-2oy"/>
                 <outlet property="frontLabel" destination="Nst-XI-6sA" id="kd5-mZ-es8"/>
                 <outlet property="frontView" destination="0pO-WY-zsF" id="dxv-7P-YS6"/>
+                <outlet property="markAsLearnedButton" destination="JJO-OG-28T" id="wuz-ll-kfZ"/>
             </connections>
             <point key="canvasLocation" x="1645.5999999999999" y="-374.66266866566718"/>
         </view>
