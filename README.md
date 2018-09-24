@@ -14,6 +14,14 @@ Translate web1             |  Translate web2
 :-------------------------:|:-------------------------:
 ![Image](web1.png)  	   |  ![Image](web2.png)
 
+# To run the app
+You need to enable Drive API and Spreadsheet API in Google developer console and to get your own CLIENT_ID for this app. Place it in project in file Secrets.swift.
+```groovy
+struct Secrets {
+    static let CLIENT_ID = "XXX.apps.googleusercontent.com"
+}
+```
+
 Contact
 =================================
 Try to contact me if you have any questions at serge.nes @ gmail.com
