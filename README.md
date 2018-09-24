@@ -1,7 +1,7 @@
 # RecalList-iOS
 This app turns the favorites items saved in google translate website to the memory cards.
-![Screenshot#1](app1.png | width=100)
-![Screenshot#2](app2.png | width=100)
+![Screenshot#1](app1.png)
+![Screenshot#2](app2.png)
 
 # Prepare the lists
 Go to the Google Translate site (https://translate.google.com).
