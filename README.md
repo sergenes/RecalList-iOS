@@ -1,7 +1,7 @@
 # RecalList-iOS
 This app turns the favorites items saved in google translate website to the memory cards.
 
-<div>
+<div width="100%">
         <img width="50%" src="app1.png" alt="screen1" title="Drive"</img>
         <img width="50%" src="app2.png" alt="screen2" title="Cards"></img>
 </div>
@@ -11,7 +11,7 @@ This app turns the favorites items saved in google translate website to the memo
 2. Use a "save" button #1 every time you've got a translation and you feel that you want to remember this couple of the words or the phrases. 
 3. Use a "Show Phrasebook" button #2 and "Export to Google Sheets" button #3 to save all the words and the phrases on your Google Drive.
 
-<div>
+<div width="100%">
         <img width="50%" src="web1.png" alt="screen1" title="web1"</img>
         <img width="50%" src="web2.png" alt="screen2" title="web2"></img>
 </div>
