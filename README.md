@@ -21,6 +21,10 @@ struct Secrets {
     static let CLIENT_ID = "XXX.apps.googleusercontent.com"
 }
 ```
+And then you need to define a new URL scheme on Info tab in XCode, use the same CLIENT_ID of Google API.
+```groovy
+com.googleusercontent.apps.XXX
+```
 
 Contact
 =================================
