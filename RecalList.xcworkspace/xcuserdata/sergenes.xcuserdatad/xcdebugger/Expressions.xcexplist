@@ -17,10 +17,21 @@
          contextName = "CardsDataSource.koloda(_:viewForCardAt:):CardsDataSource.swift">
       </ContextState>
       <ContextState
+         contextName = "AppAPI.isSignedIn():AuthAPI.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "GIDSignIn.sharedInstance().hasAuthInKeychain()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "ViewController.displayResultWithTicket(ticket:finishedWithObject:error:):ViewController.swift">
       </ContextState>
       <ContextState
          contextName = "CardsViewController.indexChanged(_:):CardsViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "CardsViewModel.sayWord(index:):CardsViewModel.swift">
       </ContextState>
       <ContextState
          contextName = "closure #1 in AppScreensManager.showAuthentication():AppScreensManager.swift">
@@ -29,9 +40,6 @@
                value = "self.navigationController.presentedViewController">
             </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "CardsViewModel.sayWord(index:):CardsViewModel.swift">
       </ContextState>
       <ContextState
          contextName = "-[GTMOAuth2Authentication beginTokenFetchWithDelegate:didFinishSelector:]:GTMOAuth2Authentication.m">

@@ -62,7 +62,7 @@ class AppNavigator: NSObject, AppAPIInjector {
                     self.appAPI.requestSignInSilently()
                 }
             }else{
-                self.showAuthentication()
+                self.showAuthentication(error: nil)
             }
         }
         SVProgressHUD.show()
@@ -114,7 +114,7 @@ class AppNavigator: NSObject, AppAPIInjector {
         }
     }
     
-    fileprivate func showAuthentication() {
+    fileprivate func showAuthentication(error:String?) {
         nprint("showAuthentication...")
         UI {
             let authStoryboard = UIStoryboard.init(name: "Auth", bundle: nil)
@@ -124,6 +124,10 @@ class AppNavigator: NSObject, AppAPIInjector {
             UIView.transition(from:clvc!.view! , to: lvc.view!, duration: 1.0, options: .transitionCrossDissolve) {[unowned self] (finished) in
                self.navigationController.pushViewController(lvc, animated: false)
                self.window.rootViewController = self.navigationController
+                
+                if error != nil {
+                    self.window.rootViewController?.showAlert(title: "Auth Error", message: error!)
+                }
             }
 
             SVProgressHUD.dismiss()
@@ -136,15 +140,13 @@ class AppNavigator: NSObject, AppAPIInjector {
             if notification.userInfo != nil {
                 guard let userInfo = notification.userInfo as? [String:String] else { return }
                 if let errorMessage = userInfo["Error"] {
-                    self.window.rootViewController?.showAlert(title: "Auth Error", message: errorMessage)
+                    self.showAuthentication(error: errorMessage)
                     return
                 }
                 print("receiveToggleAuthUINotification: "+userInfo["statusText"]!)
-                UI {
-                    self.showFiles()
-                }
+                self.showFiles()
             }else{
-                showAuthentication()
+                showAuthentication(error: nil)
             }
         }
     }

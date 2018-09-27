@@ -12,8 +12,8 @@ import Koloda
 extension UIColor {
     static let pink = UIColor.init(netHex:0xffc7c7)
     static let green = UIColor.init(netHex:0xb2ffa1)
-    static let blue = UIColor.init(netHex:0xb6caff)
-    static let purple = UIColor.init(netHex:0xadf4ff)
+    static let blue = UIColor.init(netHex:0xadf4ff)
+    static let purple = UIColor.init(netHex:0xb6caff)
 }
 
 let PAINT_IN_PINK_CONDITION = 10
