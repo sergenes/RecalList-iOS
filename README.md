@@ -1,4 +1,4 @@
-# RecalList-iOS
+# RecalList-iOS [[RecalList-Android]](https://github.com/sergenes/RecalList-Android)
 This app turns the favorites items saved in google translate website to the memory cards.
 
 List of documents          |  Cards
