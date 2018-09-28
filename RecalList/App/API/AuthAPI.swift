@@ -13,37 +13,37 @@ import GoogleAPIClientForREST
 private let scopes = [kGTLRAuthScopeSheetsDrive, kGTLRAuthScopeSheetsSpreadsheets, kGTLRAuthScopeDrive]
 
 extension AppAPI: GIDSignInDelegate{
-    
+
     private func initGoogleSDK(){
         GIDSignIn.sharedInstance().clientID = Secrets.CLIENT_ID
         GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance().scopes = scopes
     }
-    
+
     func isSignedIn()->Bool {
         initGoogleSDK()
         return GIDSignIn.sharedInstance().hasAuthInKeychain()
     }
-    
+
     func requestSignInSilently() {
         initGoogleSDK()
         GIDSignIn.sharedInstance()?.signInSilently()
     }
-    
-    func requestSignIn(uiDeligate:GIDSignInUIDelegate) {
+
+    func requestSignIn(uiDelegate:GIDSignInUIDelegate) {
         initGoogleSDK()
-        GIDSignIn.sharedInstance().uiDelegate = uiDeligate
+        GIDSignIn.sharedInstance().uiDelegate = uiDelegate
         GIDSignIn.sharedInstance()?.signIn()
     }
-    
+
     func requestLogOut(){
         GIDSignIn.sharedInstance()?.signOut()
     }
-    
+
     func getAccount()->GIDProfileData{
         return GIDSignIn.sharedInstance().currentUser.profile
     }
-    
+
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!,
               withError error: Error!) {
         if let error = error {
@@ -61,25 +61,25 @@ extension AppAPI: GIDSignInDelegate{
             //let givenName:String = user.profile.givenName//
             //let familyName:String = user.profile.familyName
             //let email:String = user.profile.email
-            
+
             //print(userId)
             //print(idToken)
             //print(fullName)
             //print(givenName)
             //print(familyName)
             //print(email)
-            
+
             NotificationCenter.default.post(
                 name: .googleAuthUINotification,
                 object: nil,
                 userInfo: ["statusText": "Signed in user:\n\(fullName)"])
-            
+
         }
     }
-    
+
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!,
               withError error: Error!) {
         print("didDisconnectWith \(String(describing: user.profile.email))")
-        
+
     }
 }

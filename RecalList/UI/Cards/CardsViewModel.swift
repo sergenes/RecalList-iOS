@@ -10,6 +10,15 @@ import AVFoundation
 import Koloda
 import GoogleAPIClientForREST
 
+
+protocol CardsScreenProtocol{
+    func peepTranslation(index:Int)
+    func markAsLearned(index:Int)
+    func sayWord(index:Int)
+    func getCardsCount()->Int
+    func getDirection()->Int
+}
+
 // MARK: - Card is data model
 public class Card {
     var index:Int
@@ -27,6 +36,26 @@ public class Card {
         self.to = to
         self.peeped = peeped
     }
+    
+    func fromVoice()->AVSpeechSynthesisVoice?{
+        if from.hasPrefix("Russian") {
+            return AVSpeechSynthesisVoice(language: "ru-RU")
+        } else if from.hasPrefix("Hebrew") {
+            return AVSpeechSynthesisVoice(language: "he-IL")
+        } else{
+            return AVSpeechSynthesisVoice(language: "en-US")
+        }
+    }
+    
+    func toVoice()->AVSpeechSynthesisVoice?{
+        if to.hasPrefix("Russian") {
+            return AVSpeechSynthesisVoice(language: "ru-RU")
+        } else if to.hasPrefix("Hebrew") {
+            return AVSpeechSynthesisVoice(language: "he-IL")
+        } else{
+            return AVSpeechSynthesisVoice(language: "en-US")
+        }
+    }
 }
 
 protocol SpeakerEventsDelegate {
@@ -38,11 +67,7 @@ class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppA
     var selectedSegmentIndex:Int = 0
     var currentCard = 0
     var currentWord = 0
-//    typealias CardsListReadyCompletion = (String) -> Void
-//    
-//    func cardsListReady(completion: @escaping CardsListReadyCompletion) {
-//
-//    }
+
     let synth = AVSpeechSynthesizer()
     let selectedFile:GTLRDrive_File
     var speakerEventsDelegate:SpeakerEventsDelegate? = nil
@@ -91,27 +116,15 @@ class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppA
            synth.delegate = self
         }
         currentCard = index
+        
         let card = getCard(index: index)
         var wordToSay = card.word
-        var voice:AVSpeechSynthesisVoice!
-        if card.from.hasPrefix("Russian") {
-            voice = AVSpeechSynthesisVoice(language: "ru-RU")
-        } else if card.from.hasPrefix("Hebrew") {
-            voice = AVSpeechSynthesisVoice(language: "he-IL")
-        } else{
-             voice = AVSpeechSynthesisVoice(language: "en-US")
-        }
+        var voice = card.fromVoice()!
+        
         if direction==1 {
             wordToSay = card.translation
-            if card.to.hasPrefix("Russian") {
-                voice = AVSpeechSynthesisVoice(language: "ru-RU")
-            } else if card.to.hasPrefix("Hebrew") {
-                voice = AVSpeechSynthesisVoice(language: "he-IL")
-            } else{
-                voice = AVSpeechSynthesisVoice(language: "en-US")
-            }
+            voice = card.toVoice()!
         }
-        
         let utterance = AVSpeechUtterance(string: wordToSay)
         utterance.voice = voice
         
@@ -145,13 +158,7 @@ class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppA
         synth.delegate = nil
         guard let card = getCardByIndex(index: index) else { return }
         let utterance = AVSpeechUtterance(string: card.word)
-        if card.from.hasPrefix("Russian") {
-            utterance.voice = AVSpeechSynthesisVoice(language: "ru-RU")
-        } else if card.from.hasPrefix("Hebrew") {
-            utterance.voice = AVSpeechSynthesisVoice(language: "he-IL")
-        } else{
-            utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
-        }
+        utterance.voice = card.fromVoice()!
         synth.speak(utterance)
     }
     

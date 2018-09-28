@@ -25,7 +25,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, AppAPIInjector
                                                selector: #selector(receiveToggleAuthUINotification(_:)),
                                                name: .googleAuthUINotification,
                                                object: nil)
-        appAPI.requestSignIn(uiDeligate: self)
+        appAPI.requestSignIn(uiDelegate: self)
     }
     
     deinit {
@@ -53,7 +53,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, AppAPIInjector
                     UI {
                         NotificationCenter.default.post(
                             name: .actionNotification,
-                            object: Action.logedIn,
+                            object: Action.loggedIn,
                             userInfo: nil)
                     }
                 }

@@ -57,7 +57,7 @@ class FilesViewController: UIViewController, UITableViewDelegate {
             
             NotificationCenter.default.post(
                 name: .actionNotification,
-                object: Action.logedOut,
+                object: Action.loggedOut,
                 userInfo: nil)
             
         }))

@@ -12,8 +12,8 @@ import GoogleAPIClientForREST
 
 
 enum Action {
-    case logedIn
-    case logedOut
+    case loggedIn
+    case loggedOut
     case fileSelected
     case backFromCards
 }
@@ -157,10 +157,10 @@ class AppNavigator: NSObject, AppAPIInjector {
                 guard let action = notification.object as? Action else { return }
                 
                 switch action {
-                    case .logedIn:
+                    case .loggedIn:
                         showFiles()
                         break
-                    case .logedOut:
+                    case .loggedOut:
                         afterLogOutNavigation()
                         break
                     case .fileSelected:
