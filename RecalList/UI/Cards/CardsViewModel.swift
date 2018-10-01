@@ -10,69 +10,12 @@ import AVFoundation
 import Koloda
 import GoogleAPIClientForREST
 
-enum Direction {
-    case FRONT
-    case BACK
-}
-
-enum PlayWordsTempo: TimeInterval {
-    case SIDES = 0.5, WORDS = 1.5
-
-    func pause()-> TimeInterval{
-        return self.rawValue
-    }
-}
-
 protocol CardsScreenProtocol {
     func peepTranslation(index: Int)
     func markAsLearned(index: Int)
     func sayWord(index: Int)
     func getCardsCount() -> Int
     func getDirection() -> Int
-}
-
-// MARK: - Card is data model
-public class Card {
-    var index: Int
-    var word: String
-    var translation: String
-    var from: String
-    var to: String
-    var peeped: Int = 10
-
-    public init(index: Int, word: String, translation: String, from: String, to: String, peeped: Int) {
-        self.index = index
-        self.word = word
-        self.translation = translation
-        self.from = from
-        self.to = to
-        self.peeped = peeped
-    }
-
-    func fromVoice() -> AVSpeechSynthesisVoice? {
-        if from.hasPrefix("Russian") {
-            return AVSpeechSynthesisVoice(language: "ru-RU")
-        } else if from.hasPrefix("Hebrew") {
-            return AVSpeechSynthesisVoice(language: "he-IL")
-        } else {
-            return AVSpeechSynthesisVoice(language: "en-US")
-        }
-    }
-
-    func toVoice() -> AVSpeechSynthesisVoice? {
-        if to.hasPrefix("Russian") {
-            return AVSpeechSynthesisVoice(language: "ru-RU")
-        } else if to.hasPrefix("Hebrew") {
-            return AVSpeechSynthesisVoice(language: "he-IL")
-        } else {
-            return AVSpeechSynthesisVoice(language: "en-US")
-        }
-    }
-}
-
-protocol SpeakerEventsDelegate {
-    func done()
-    func pause()
 }
 
 class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppAPIInjector, AVSpeechSynthesizerDelegate {
@@ -91,6 +34,10 @@ class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppA
     func appendCard(card: Card) {
         wordsArray.append(card)
     }
+    
+    func getData()->Array<Card>{
+        return wordsArray
+    }
 
     init(selectedFile: GTLRDrive_File) {
         self.selectedFile = selectedFile
@@ -101,6 +48,7 @@ class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppA
         synth.delegate = self
     }
 
+    // MARK: - AVSpeechSynthesizerDelegate
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didPause utterance: AVSpeechUtterance) {
         speakerEventsDelegate?.pause()
     }

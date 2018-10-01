@@ -169,9 +169,15 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="81f-N4-M1C"/>
-                                    <barButtonItem tag="100" title="speaker" id="AyP-sA-B4p">
+                                    <barButtonItem tag="100" title="sync" id="AyP-sA-B4p">
                                         <connections>
-                                            <action selector="pressSourceButton:" destination="jlE-sm-eKN" id="GeJ-k9-94a"/>
+                                            <action selector="pressSyncButton:" destination="jlE-sm-eKN" id="1bx-wI-t1D"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Xka-oM-rqh"/>
+                                    <barButtonItem tag="100" title="speaker" id="c8J-y7-zy8">
+                                        <connections>
+                                            <action selector="pressSourceButton:" destination="jlE-sm-eKN" id="4iz-sz-PxR"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -201,6 +207,7 @@
                         <outlet property="directionSegmentedControl" destination="qVi-t3-ZCf" id="fQV-vL-IzG"/>
                         <outlet property="kolodaView" destination="DPo-C1-64l" id="VTl-jD-aqf"/>
                         <outlet property="playButton" destination="luN-D2-iaF" id="91E-Oe-dzw"/>
+                        <outlet property="syncButton" destination="AyP-sA-B4p" id="K4B-pW-btk"/>
                         <outlet property="titleLabel" destination="clr-MN-Wax" id="ZPE-VN-rZC"/>
                     </connections>
                 </viewController>

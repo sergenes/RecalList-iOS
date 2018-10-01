@@ -13,19 +13,28 @@ import Koloda
 import SVProgressHUD
 import MediaPlayer
 
+import WatchConnectivity
 
-class CardsViewController: UIViewController, KolodaViewDelegate, SpeakerEventsDelegate {
 
-    
+class CardsViewController: UIViewController, KolodaViewDelegate, SpeakerEventsDelegate, WatchSyncManagerDelegate {
+    // MARK: - WatchSyncManagerDelegate
+    func watchActivated() {
+        syncButton.isEnabled = true
+    }
     
     var selectedFile:GTLRDrive_File?
     var cardsDataSource:CardsDataSource?
     
+    @IBOutlet weak var syncButton: UIBarButtonItem!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var kolodaView: KolodaView!
     @IBOutlet weak var directionSegmentedControl: UISegmentedControl!
     @IBOutlet weak var playButton: UIBarButtonItem!
-    
+
+    lazy private var watchSyncManager: WatchSyncManager = {
+        return WatchSyncManager(delegate: self)
+    }()
+
     lazy private var viewModel: CardsViewModel = {
         return CardsViewModel(selectedFile: self.selectedFile!)
     }()
@@ -36,7 +45,8 @@ class CardsViewController: UIViewController, KolodaViewDelegate, SpeakerEventsDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        syncButton.isEnabled = false
+
         NotificationCenter.default.addObserver(self, selector: #selector(dataSourceLoaded(_:)), name: .dataDownloadCompleted, object: nil)
         
         self.titleLabel.text = selectedFile?.name
@@ -72,6 +82,9 @@ class CardsViewController: UIViewController, KolodaViewDelegate, SpeakerEventsDe
         pressPlayPouseButton(playButton)
     }
     
+    @IBAction func pressSyncButton(_ sender: UIBarButtonItem) {
+        watchSyncManager.sendData(cards:viewModel.getData(), name:selectedFile!.name!)
+    }
     
     @IBAction func pressSourceButton(_ sender: UIBarButtonItem) {
         if sender.tag == 100 {

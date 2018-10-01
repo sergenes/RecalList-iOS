@@ -11,13 +11,58 @@
         <!--Interface Controller-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="RecalList_Watch" customModuleProvider="target">
+                <controller contentMode="scaleAspectFill" fullBounds="YES" fullScreen="YES" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="RecalList_Watch" customModuleProvider="target">
                     <items>
-                        <label width="136" height="56" alignment="left" text="Label" textAlignment="center" id="byE-Pz-YjO"/>
+                        <group width="1" height="1" alignment="center" verticalAlignment="center" layout="vertical" id="eNw-5u-TkE">
+                            <items>
+                                <group width="1" alignment="left" id="238-Aj-WBQ">
+                                    <items>
+                                        <label width="75" alignment="left" text="Name" id="qym-p3-9SG"/>
+                                        <dateLabel alignment="right" hidden="YES" id="Toa-uS-v4s">
+                                            <dateFormatterStyle key="timeStyle" short="YES"/>
+                                        </dateLabel>
+                                    </items>
+                                </group>
+                                <group width="136" height="80" alignment="center" id="L5A-rf-ht8">
+                                    <items>
+                                        <label width="136" height="82" alignment="center" text="There is no cards yet..." textAlignment="center" numberOfLines="3" id="byE-Pz-YjO">
+                                            <fontDescription key="font" style="UICTFontTextStyleTitle3"/>
+                                        </label>
+                                    </items>
+                                </group>
+                                <label width="136" alignment="left" text="1 of 1" textAlignment="center" id="Co1-tz-DNn">
+                                    <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                                </label>
+                                <group width="136" alignment="left" verticalAlignment="center" id="9f5-d3-HjC">
+                                    <items>
+                                        <button width="62" alignment="left" verticalAlignment="bottom" title="peep" id="KoW-fr-LWN">
+                                            <connections>
+                                                <action selector="pressedPeepButton" destination="AgC-eL-Hgc" id="psu-Az-3N2"/>
+                                            </connections>
+                                        </button>
+                                        <button width="62" alignment="right" verticalAlignment="bottom" title="play" id="HIN-Ag-2Ub">
+                                            <connections>
+                                                <action selector="pressedPlayButton" destination="AgC-eL-Hgc" id="BDF-VJ-dPN"/>
+                                            </connections>
+                                        </button>
+                                    </items>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </group>
+                            </items>
+                            <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
+                        </group>
+                        <spriteKitScene width="2" height="2" alignment="center" scene="fixFullScreenBug" id="udd-ie-A18"/>
                     </items>
+                    <connections>
+                        <outlet property="counterLabel" destination="Co1-tz-DNn" id="5oI-jO-cOy"/>
+                        <outlet property="frontLabel" destination="byE-Pz-YjO" id="t6q-fS-t9O"/>
+                        <outlet property="nameLabel" destination="qym-p3-9SG" id="kA3-8G-GpK"/>
+                        <outlet property="peepButton" destination="KoW-fr-LWN" id="9e2-Q8-sLp"/>
+                        <outlet property="playButton" destination="HIN-Ag-2Ub" id="4eo-9n-hRJ"/>
+                    </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="220" y="345"/>
+            <point key="canvasLocation" x="220" y="339"/>
         </scene>
         <!--Static Notification Interface Controller-->
         <scene sceneID="AEw-b0-oYE">
@@ -34,21 +79,21 @@
                     </connections>
                 </notificationController>
             </objects>
-            <point key="canvasLocation" x="220" y="643"/>
+            <point key="canvasLocation" x="220" y="691"/>
         </scene>
         <!--Notification Controller-->
         <scene sceneID="ZPc-GJ-vnh">
             <objects>
                 <controller id="4sK-HA-Art" customClass="NotificationController" customModule="RecalList_Watch" customModuleProvider="target"/>
             </objects>
-            <point key="canvasLocation" x="468" y="643"/>
+            <point key="canvasLocation" x="541" y="643"/>
         </scene>
         <!--Notification Controller-->
         <scene sceneID="Niz-AI-uX2">
             <objects>
                 <controller id="eXb-UN-Cd0" customClass="NotificationController" customModule="RecalList_Watch" customModuleProvider="target"/>
             </objects>
-            <point key="canvasLocation" x="468" y="345"/>
+            <point key="canvasLocation" x="541" y="344"/>
         </scene>
     </scenes>
 </document>
