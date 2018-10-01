@@ -12,16 +12,33 @@ import GoogleAPIClientForREST
 import Koloda
 import SVProgressHUD
 import MediaPlayer
-
 import WatchConnectivity
 
 
 class CardsViewController: UIViewController, KolodaViewDelegate, SpeakerEventsDelegate, WatchSyncManagerDelegate {
     // MARK: - WatchSyncManagerDelegate
     func watchActivated() {
-        syncButton.isEnabled = true
+        UI {
+            self.syncButton.isEnabled = true
+        }
     }
     
+    func watchDeactivated(){
+        UI {
+            self.syncButton.isEnabled = false
+        }
+    }
+    
+    func dataSent(sync: Bool){
+        UI {
+            SVProgressHUD.dismiss()
+            if !sync {
+                //todo show error
+            }
+        }
+    }
+    
+    var watchSyncManager: WatchSyncManager?
     var selectedFile:GTLRDrive_File?
     var cardsDataSource:CardsDataSource?
     
@@ -30,10 +47,6 @@ class CardsViewController: UIViewController, KolodaViewDelegate, SpeakerEventsDe
     @IBOutlet weak var kolodaView: KolodaView!
     @IBOutlet weak var directionSegmentedControl: UISegmentedControl!
     @IBOutlet weak var playButton: UIBarButtonItem!
-
-    lazy private var watchSyncManager: WatchSyncManager = {
-        return WatchSyncManager(delegate: self)
-    }()
 
     lazy private var viewModel: CardsViewModel = {
         return CardsViewModel(selectedFile: self.selectedFile!)
@@ -46,6 +59,7 @@ class CardsViewController: UIViewController, KolodaViewDelegate, SpeakerEventsDe
     override func viewDidLoad() {
         super.viewDidLoad()
         syncButton.isEnabled = false
+        watchSyncManager = WatchSyncManager(delegate: self)
 
         NotificationCenter.default.addObserver(self, selector: #selector(dataSourceLoaded(_:)), name: .dataDownloadCompleted, object: nil)
         
@@ -83,7 +97,8 @@ class CardsViewController: UIViewController, KolodaViewDelegate, SpeakerEventsDe
     }
     
     @IBAction func pressSyncButton(_ sender: UIBarButtonItem) {
-        watchSyncManager.sendData(cards:viewModel.getData(), name:selectedFile!.name!)
+        SVProgressHUD.show()
+        watchSyncManager?.sendData(cards:viewModel.getData(), name:selectedFile!.name!)
     }
     
     @IBAction func pressSourceButton(_ sender: UIBarButtonItem) {

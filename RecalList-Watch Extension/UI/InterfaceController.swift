@@ -11,6 +11,12 @@ import Foundation
 import AVFoundation
 import WatchConnectivity
 
+enum StorageKeys {
+    static let storageNameKey = "com.nes.recallist.app"
+    static let nameKey = "com.nes.data.name"
+    static let arrayKey = "com.nes.data.array"
+}
+
 enum Mode {
     case idle
     case playing
@@ -44,11 +50,11 @@ class InterfaceController: WKInterfaceController, AVSpeechSynthesizerDelegate {
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
         
-        let sharedDefault = UserDefaults(suiteName: "com.nes.recallist.app")
-        if let nameData = sharedDefault?.string(forKey: "com.nes.data.name") {
+        let sharedDefault = UserDefaults(suiteName: StorageKeys.storageNameKey)
+        if let nameData = sharedDefault?.string(forKey: StorageKeys.nameKey) {
             nameLabel.setText(nameData)
         }
-        if let dataArray = sharedDefault?.array(forKey: "com.nes.data.array") as? Array<Data> {
+        if let dataArray = sharedDefault?.array(forKey: StorageKeys.arrayKey) as? Array<Data> {
             for data in dataArray {
                 do {
                     if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]{
@@ -177,14 +183,14 @@ extension InterfaceController: WCSessionDelegate {
     
     func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
         print("watch received app context: ", applicationContext)
-        let sharedDefault = UserDefaults(suiteName: "com.nes.recallist.app")
-        if let nameData = applicationContext["com.nes.name"] as? String {
+        let sharedDefault = UserDefaults(suiteName: StorageKeys.storageNameKey)
+        if let nameData = applicationContext[WatchProtocolKeys.nameKey] as? String {
            nameLabel.setText(nameData)
-           sharedDefault?.set(nameData, forKey: "com.nes.data.name")
+           sharedDefault?.set(nameData, forKey: StorageKeys.nameKey)
         }
         
-        if let dataArray = applicationContext["com.nes.data"] as? Array<Data> {
-            sharedDefault?.set(dataArray, forKey: "com.nes.data.array")
+        if let dataArray = applicationContext[WatchProtocolKeys.payloadKey] as? Array<Data> {
+            sharedDefault?.set(dataArray, forKey: StorageKeys.arrayKey)
             sharedDefault?.synchronize()
             wordsArray.removeAll()
             for data in dataArray {
@@ -194,17 +200,33 @@ extension InterfaceController: WCSessionDelegate {
                     }
                 } catch {
                     print("error 111")
-                    return
                 }
             }
             if (wordsArray.count > 0){
-               frontLabel.setText(wordsArray[0].word)
+                frontLabel.setText(wordsArray[0].word)
                 counterLabel.setText("\(currentCard + 1) of \(wordsArray.count)")
+                WKInterfaceDevice.current().play(.success)
+               
+                sendAK(session:session, dataOk: true)
             }else{
+                 WKInterfaceDevice.current().play(.failure)
                 frontLabel.setText("There is no cards")
                 counterLabel.setText("...")
+                sendAK(session:session, dataOk: false)
             }
             
         }
+    }
+    
+    func sendAK(session: WCSession, dataOk:Bool){
+//        do {
+            //try session.updateApplicationContext([WatchProtocolKeys.confirmationKey:dataOk])
+            
+            watchSession?.sendMessage([WatchProtocolKeys.confirmationKey:dataOk], replyHandler: nil, errorHandler: { (error) -> Void in
+                print("sendMessage to iPhone - OK!")
+            })
+//        } catch {
+//            print("Error sending dictionary to iPhone!")
+//        }
     }
 }

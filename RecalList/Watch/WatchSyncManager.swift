@@ -11,9 +11,37 @@ import WatchConnectivity
 
 protocol WatchSyncManagerDelegate {
     func watchActivated()
+    func watchDeactivated()
+    func dataSent(sync:Bool)
 }
 //todo get updated peeks count from the watch
 class WatchSyncManager: NSObject, WCSessionDelegate {
+    func sessionReachabilityDidChange(_ session: WCSession) {
+        print("sessionReachabilityDidChange ")
+    }
+
+    func session(_ session: WCSession, didFinish userInfoTransfer: WCSessionUserInfoTransfer, error: Error?) {
+        print("userInfoTransfer ")
+    }
+
+    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any]) {
+        print("didReceiveUserInfo ")
+    }
+
+    func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
+        print("didReceiveMessage ")
+        let response = message[WatchProtocolKeys.confirmationKey] as? Bool ?? false
+        delegate?.dataSent(sync: response)
+    }
+
+    func session(_ session: WCSession, didReceiveMessageData messageData: Data) {
+        print("didReceiveMessageData 1")
+    }
+
+    func session(_ session: WCSession, didReceiveMessageData messageData: Data, replyHandler: @escaping (Data) -> Void) {
+        print("didReceiveMessageData 2")
+    }
+
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         print("Session activation did complete")
         delegate?.watchActivated()
@@ -21,10 +49,25 @@ class WatchSyncManager: NSObject, WCSessionDelegate {
 
     func sessionDidBecomeInactive(_ session: WCSession) {
         print("session did become inactive")
+        delegate?.watchDeactivated()
     }
 
     func sessionDidDeactivate(_ session: WCSession) {
         print("session did deactivate")
+        delegate?.watchDeactivated()
+    }
+    
+    func sessionWatchStateDidChange(_ session: WCSession){
+        print("sessionWatchStateDidChange")
+        if WCSession.isSupported() && watchSession?.activationState != .activated {
+            watchSession?.activate()
+        }
+    }
+
+    
+   func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]){
+        print("didReceiveApplicationContext")
+
     }
 
     func sendData(cards:Array<Card>, name:String) {
@@ -32,7 +75,7 @@ class WatchSyncManager: NSObject, WCSessionDelegate {
         for c in cards {
             dataArray.append(c.jsonData)
         }
-        let data:[String:Any] = ["com.nes.data":dataArray, "com.nes.name": name]
+        let data:[String:Any] = [WatchProtocolKeys.payloadKey:dataArray, WatchProtocolKeys.nameKey: name]
         do {
             try watchSession?.updateApplicationContext(data)
         } catch {
@@ -45,14 +88,25 @@ class WatchSyncManager: NSObject, WCSessionDelegate {
     fileprivate var watchSession: WCSession?
 
     deinit {
-
+        watchSession?.delegate = nil
+        delegate = nil
+        
     }
 
     init(delegate:WatchSyncManagerDelegate) {
         super.init()
+        
         self.delegate = delegate
         watchSession = WCSession.default
+        print("WatchSyncManager - init()")
         watchSession?.delegate = self
-        watchSession?.activate()
+        if watchSession?.activationState == .activated {
+            print("WatchSyncManager - init(1)")
+            delegate.watchActivated()
+        }else{
+            print("WatchSyncManager - init(2)")
+            watchSession?.activate()
+        }
+        
     }
 }
