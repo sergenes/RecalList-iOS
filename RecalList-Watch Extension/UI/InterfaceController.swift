@@ -41,14 +41,32 @@ class InterfaceController: WKInterfaceController, AVSpeechSynthesizerDelegate {
     @IBOutlet weak var peepButton: WKInterfaceButton!
     @IBOutlet weak var playButton: WKInterfaceButton!
     
+    
+    @IBOutlet weak var cardContainer: WKInterfaceGroup!
+    @IBOutlet weak var fixFullScreenBug: WKInterfaceSKScene!
+    @IBOutlet weak var mainContainer: WKInterfaceGroup!
+    @IBOutlet weak var toolBarContainer: WKInterfaceGroup!
+    
     internal var wordsArray: Array<Card> = []
     
-    var currentWord = Direction.FRONT
+    var currentSide = CardSide.FRONT
     var currentCard = 0
     var mode = Mode.idle
     
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
+        
+        let device = WKInterfaceDevice.current()
+        let bounds = device.screenBounds
+        let height = bounds.height
+        let width = bounds.width
+        mainContainer.setWidth(width)
+        mainContainer.setHeight(height)
+        mainContainer.setVerticalAlignment(.top)
+        mainContainer.setHorizontalAlignment(.left)
+        toolBarContainer.setWidth(width)
+        cardContainer.setHeight(height - (18 + 38 + 38))
+        
         
         let sharedDefault = UserDefaults(suiteName: StorageKeys.storageNameKey)
         if let nameData = sharedDefault?.string(forKey: StorageKeys.nameKey) {
@@ -66,7 +84,7 @@ class InterfaceController: WKInterfaceController, AVSpeechSynthesizerDelegate {
                 }
             }
             counterLabel.setText("\(currentCard + 1) of \(wordsArray.count)")
-            frontLabel.setText(wordsArray[0].word)
+            frontLabel.setText(wordsArray[0].frontVal)
         }else{
             frontLabel.setText("There is no cards")
             counterLabel.setText("...")
@@ -74,8 +92,9 @@ class InterfaceController: WKInterfaceController, AVSpeechSynthesizerDelegate {
         
         watchSession = WCSession.default
         do {
+            // keep app on the screen
             try sessionAudio.setCategory(AVAudioSession.Category.playback,
-                                    mode: .default,
+                                    mode: .spokenAudio,
                                     policy: .longForm,
                                     options: [])
         }
@@ -95,16 +114,21 @@ class InterfaceController: WKInterfaceController, AVSpeechSynthesizerDelegate {
     }
 
     @IBAction func pressedPeepButton() {
-        if currentWord == .FRONT {
-            currentWord = .BACK
+        flipCard()
+    }
+    
+    func flipCard() {
+        if currentSide == .FRONT {
+            currentSide = .BACK
+            wordsArray[currentCard].peeped += 1
+            
             peepButton.setTitle("back")
-            frontLabel.setText(wordsArray[currentCard].translation)
+            frontLabel.setText(wordsArray[currentCard].backVal)
         }else{
-            currentWord = .FRONT
+            currentSide = .FRONT
             peepButton.setTitle("peep")
-            frontLabel.setText(wordsArray[currentCard].word)
+            frontLabel.setText(wordsArray[currentCard].frontVal)
         }
-        
     }
     
     @IBAction func pressedPlayButton() {
@@ -119,7 +143,7 @@ class InterfaceController: WKInterfaceController, AVSpeechSynthesizerDelegate {
                     return
                 }
                 
-                self.sayBothWords(index: self.currentCard, direction: self.currentWord)
+                self.sayBothWords(index: self.currentCard, side: self.currentSide)
             })
         }else{
             mode = .idle
@@ -130,6 +154,20 @@ class InterfaceController: WKInterfaceController, AVSpeechSynthesizerDelegate {
         
     }
     
+    @IBAction func tapUpdated(_ sender: WKTapGestureRecognizer) {
+        showNextCard()
+    }
+    
+    func showNextCard(){
+        if currentCard < wordsArray.count - 1 {
+            currentCard = currentCard + 1
+        } else {
+            currentCard = 0
+        }
+        frontLabel.setText(wordsArray[currentCard].frontVal)
+        counterLabel.setText("\(currentCard + 1) of \(wordsArray.count)")
+    }
+    
     // MARK: - AVSpeechSynthesizerDelegate
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didPause utterance: AVSpeechUtterance) {
         
@@ -137,11 +175,11 @@ class InterfaceController: WKInterfaceController, AVSpeechSynthesizerDelegate {
     
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         
-        if currentWord == Direction.FRONT {
-            currentWord = Direction.BACK
+        if currentSide == CardSide.FRONT {
+            currentSide = CardSide.BACK
             Thread.sleep(forTimeInterval: PlayWordsTempo.SIDES.pause())
         } else {
-            currentWord = Direction.FRONT
+            currentSide = CardSide.FRONT
             if currentCard < wordsArray.count - 1 {
                 currentCard = currentCard + 1
             } else {
@@ -150,28 +188,28 @@ class InterfaceController: WKInterfaceController, AVSpeechSynthesizerDelegate {
             Thread.sleep(forTimeInterval: PlayWordsTempo.WORDS.pause())
             //speakerEventsDelegate?.done()
         }
-        sayBothWords(index: currentCard, direction: currentWord)
+        sayBothWords(index: currentCard, side: currentSide)
     }
     
-    func sayBothWords(index: Int, direction: Direction) {
+    func sayBothWords(index: Int, side: CardSide) {
         if synth.delegate == nil {
             synth.delegate = self
         }
         currentCard = index
         
         let card = wordsArray[currentCard]
-        var wordToSay = card.word
+        var wordToSay = card.frontVal
         var voice = card.fromVoice()!
         
-        if direction == Direction.BACK {
-            wordToSay = card.translation
+        if side == CardSide.BACK {
+            wordToSay = card.backVal
             voice = card.toVoice()!
         }
         let utterance = AVSpeechUtterance(string: wordToSay)
         utterance.voice = voice
         
         synth.speak(utterance)
-        frontLabel.setText(wordsArray[currentCard].word)
+        frontLabel.setText(wordsArray[currentCard].frontVal)
         counterLabel.setText("\(currentCard + 1) of \(wordsArray.count)")
     }
 }
@@ -185,8 +223,8 @@ extension InterfaceController: WCSessionDelegate {
         print("watch received app context: ", applicationContext)
         let sharedDefault = UserDefaults(suiteName: StorageKeys.storageNameKey)
         if let nameData = applicationContext[WatchProtocolKeys.nameKey] as? String {
-           nameLabel.setText(nameData)
-           sharedDefault?.set(nameData, forKey: StorageKeys.nameKey)
+            nameLabel.setText(nameData)
+            sharedDefault?.set(nameData, forKey: StorageKeys.nameKey)
         }
         
         if let dataArray = applicationContext[WatchProtocolKeys.payloadKey] as? Array<Data> {
@@ -203,13 +241,13 @@ extension InterfaceController: WCSessionDelegate {
                 }
             }
             if (wordsArray.count > 0){
-                frontLabel.setText(wordsArray[0].word)
+                frontLabel.setText(wordsArray[0].frontVal)
                 counterLabel.setText("\(currentCard + 1) of \(wordsArray.count)")
                 WKInterfaceDevice.current().play(.success)
-               
+                
                 sendAK(session:session, dataOk: true)
             }else{
-                 WKInterfaceDevice.current().play(.failure)
+                WKInterfaceDevice.current().play(.failure)
                 frontLabel.setText("There is no cards")
                 counterLabel.setText("...")
                 sendAK(session:session, dataOk: false)
@@ -219,14 +257,8 @@ extension InterfaceController: WCSessionDelegate {
     }
     
     func sendAK(session: WCSession, dataOk:Bool){
-//        do {
-            //try session.updateApplicationContext([WatchProtocolKeys.confirmationKey:dataOk])
-            
-            watchSession?.sendMessage([WatchProtocolKeys.confirmationKey:dataOk], replyHandler: nil, errorHandler: { (error) -> Void in
-                print("sendMessage to iPhone - OK!")
-            })
-//        } catch {
-//            print("Error sending dictionary to iPhone!")
-//        }
+        watchSession?.sendMessage([WatchProtocolKeys.confirmationKey:dataOk], replyHandler: nil, errorHandler: { (error) -> Void in
+            print("sendMessage to iPhone - OK!")
+        })
     }
 }

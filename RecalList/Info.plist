@@ -27,7 +27,7 @@
 			<string>googleAuth</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>stab</string>
+				<string>stub</string>
 			</array>
 		</dict>
 	</array>

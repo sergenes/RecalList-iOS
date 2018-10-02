@@ -15,13 +15,13 @@ protocol CardsScreenProtocol {
     func markAsLearned(index: Int)
     func sayWord(index: Int)
     func getCardsCount() -> Int
-    func getDirection() -> Int
+    func getCardSide() -> Int
 }
 
 class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppAPIInjector, AVSpeechSynthesizerDelegate {
     var selectedSegmentIndex: Int = 0
     var currentCard = 0
-    var currentWord = Direction.FRONT
+    var currentSide = CardSide.FRONT
 
     let synth = AVSpeechSynthesizer()
     let selectedFile: GTLRDrive_File
@@ -55,11 +55,11 @@ class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppA
 
     public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
 
-        if currentWord == Direction.FRONT {
-            currentWord = Direction.BACK
+        if currentSide == CardSide.FRONT {
+            currentSide = CardSide.BACK
             Thread.sleep(forTimeInterval: PlayWordsTempo.SIDES.pause())
         } else {
-            currentWord = Direction.FRONT
+            currentSide = CardSide.FRONT
             if currentCard < wordsArray.count - 1 {
                 currentCard = currentCard + 1
             } else {
@@ -68,21 +68,21 @@ class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppA
             Thread.sleep(forTimeInterval: PlayWordsTempo.WORDS.pause())
             speakerEventsDelegate?.done()
         }
-        sayBothWords(index: currentCard, direction: currentWord)
+        sayBothWords(index: currentCard, side: currentSide)
     }
 
-    func sayBothWords(index: Int, direction: Direction) {
+    func sayBothWords(index: Int, side: CardSide) {
         if synth.delegate == nil {
             synth.delegate = self
         }
         currentCard = index
 
         let card = getCard(index: index)
-        var wordToSay = card.word
+        var wordToSay = card.frontVal
         var voice = card.fromVoice()!
 
-        if direction == Direction.BACK {
-            wordToSay = card.translation
+        if side == CardSide.BACK {
+            wordToSay = card.backVal
             voice = card.toVoice()!
         }
         let utterance = AVSpeechUtterance(string: wordToSay)
@@ -119,7 +119,7 @@ class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppA
         guard let card = getCardByIndex(index: index) else {
             return
         }
-        let utterance = AVSpeechUtterance(string: card.word)
+        let utterance = AVSpeechUtterance(string: card.frontVal)
         utterance.voice = card.fromVoice()!
         synth.speak(utterance)
     }
@@ -130,7 +130,7 @@ class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppA
     }
 
     // MARK: - CardsScreenProtocol
-    func getDirection() -> Int {
+    func getCardSide() -> Int {
         return selectedSegmentIndex
     }
 

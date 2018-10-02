@@ -25,12 +25,12 @@ public class CardView: UIView {
     func setup(card: Card, index:Int, cardsScreen: CardsScreenProtocol) {
         self.cardsScreen = cardsScreen
         
-        if cardsScreen.getDirection() == 0 {
-            frontLabel.text = card.word
-            backLabel.text = card.translation
+        if cardsScreen.getCardSide() == 0 {
+            frontLabel.text = card.frontVal
+            backLabel.text = card.backVal
         }else{
-            frontLabel.text = card.translation
-            backLabel.text = card.word
+            frontLabel.text = card.backVal
+            backLabel.text = card.frontVal
         }
         self.tag = card.index
         

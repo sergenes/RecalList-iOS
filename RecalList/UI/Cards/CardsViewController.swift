@@ -121,7 +121,7 @@ class CardsViewController: UIViewController, KolodaViewDelegate, SpeakerEventsDe
            sender.tag = 200
             sender.title = "stop"
             let index = self.kolodaView.currentCardIndex
-            viewModel.sayBothWords(index: index, direction: Direction.FRONT)
+            viewModel.sayBothWords(index: index, side: CardSide.FRONT)
         }else{
             sender.title = "play"
             sender.tag = 100

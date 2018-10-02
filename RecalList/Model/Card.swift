@@ -9,7 +9,7 @@
 import Foundation
 import AVFoundation
 
-public enum Direction {
+public enum CardSide {
     case FRONT
     case BACK
 }
@@ -30,37 +30,37 @@ public protocol SpeakerEventsDelegate {
 // MARK: - Card is data model
 public class Card {
     var index: Int
-    var word: String
-    var translation: String
+    var frontVal: String
+    var backVal: String
     var from: String
     var to: String
     var peeped: Int = 10
     
     var jsonString : String {
-        let dict:[String : Any] = ["index" : index, "word" : word, "translation" : translation, "from" : from, "to" : to, "peeped" : peeped]
+        let dict:[String : Any] = ["index" : index, "front" : frontVal, "back" : backVal, "from" : from, "to" : to, "peeped" : peeped]
         let data =  try! JSONSerialization.data(withJSONObject: dict, options: [])
         return String(data:data, encoding:.utf8)!
     }
     
     var jsonData : Data {
-        let dict:[String : Any] = ["index" : index, "word" : word, "translation" : translation, "from" : from, "to" : to, "peeped" : peeped]
+        let dict:[String : Any] = ["index" : index, "front" : frontVal, "back" : backVal, "from" : from, "to" : to, "peeped" : peeped]
         let data =  try! JSONSerialization.data(withJSONObject: dict, options: [])
         return data
     }
     
     public init(dictData:[String: Any]) {
             self.index = dictData["index" ] as! Int
-            self.word = dictData["word"] as! String
-            self.translation = dictData["translation"] as! String
+            self.frontVal = dictData["front"] as! String
+            self.backVal = dictData["back"] as! String
             self.from = dictData["from"] as! String
             self.to = dictData["to"] as! String
             self.peeped =  dictData["peeped" ] as! Int
     }
     
-    public init(index: Int, word: String, translation: String, from: String, to: String, peeped: Int) {
+    public init(index: Int, front: String, back: String, from: String, to: String, peeped: Int) {
         self.index = index
-        self.word = word
-        self.translation = translation
+        self.frontVal = front
+        self.backVal = back
         self.from = from
         self.to = to
         self.peeped = peeped

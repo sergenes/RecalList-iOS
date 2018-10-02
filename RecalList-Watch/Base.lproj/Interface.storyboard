@@ -11,29 +11,34 @@
         <!--Interface Controller-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller contentMode="scaleAspectFill" fullBounds="YES" fullScreen="YES" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="RecalList_Watch" customModuleProvider="target">
+                <controller contentMode="scaleAspectFill" fullScreen="YES" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="RecalList_Watch" customModuleProvider="target">
                     <items>
-                        <group width="1" height="1" alignment="center" verticalAlignment="center" layout="vertical" id="eNw-5u-TkE">
+                        <group width="1" height="1" alignment="left" layout="vertical" id="eNw-5u-TkE">
                             <items>
-                                <group width="1" alignment="left" id="238-Aj-WBQ">
+                                <label alignment="left" text="Name" id="qym-p3-9SG"/>
+                                <separator alignment="left" id="eaW-MK-A3d"/>
+                                <group width="1" height="73" alignment="center" layout="vertical" radius="10" id="L5A-rf-ht8">
                                     <items>
-                                        <label width="75" alignment="left" text="Name" id="qym-p3-9SG"/>
-                                        <dateLabel alignment="right" hidden="YES" id="Toa-uS-v4s">
-                                            <dateFormatterStyle key="timeStyle" short="YES"/>
-                                        </dateLabel>
-                                    </items>
-                                </group>
-                                <group width="136" height="80" alignment="center" id="L5A-rf-ht8">
-                                    <items>
-                                        <label width="136" height="82" alignment="center" text="There is no cards yet..." textAlignment="center" numberOfLines="3" id="byE-Pz-YjO">
+                                        <label width="136" height="82" alignment="center" text="There are no cards yet..." textAlignment="center" numberOfLines="3" id="byE-Pz-YjO">
+                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="font" style="UICTFontTextStyleTitle3"/>
+                                            <variation key="device=watch44mm" height="133"/>
                                         </label>
                                     </items>
+                                    <gestureRecognizers>
+                                        <tapGestureRecognizer id="rJA-6N-WIk">
+                                            <connections>
+                                                <action selector="tapUpdated:" destination="AgC-eL-Hgc" id="LRx-W0-8mA"/>
+                                            </connections>
+                                        </tapGestureRecognizer>
+                                    </gestureRecognizers>
+                                    <color key="backgroundColor" red="0.71372549019999998" green="0.79215686269999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </group>
-                                <label width="136" alignment="left" text="1 of 1" textAlignment="center" id="Co1-tz-DNn">
+                                <label width="1" alignment="center" text="1 of 1" textAlignment="center" id="Co1-tz-DNn">
                                     <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
                                 </label>
-                                <group width="136" alignment="left" verticalAlignment="center" id="9f5-d3-HjC">
+                                <spriteKitScene width="2" height="2" alignment="center" verticalAlignment="center" hidden="YES" id="ITH-Rd-lfD"/>
+                                <group width="1" alignment="left" verticalAlignment="bottom" id="9f5-d3-HjC">
                                     <items>
                                         <button width="62" alignment="left" verticalAlignment="bottom" title="peep" id="KoW-fr-LWN">
                                             <connections>
@@ -49,20 +54,23 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </group>
                             </items>
-                            <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </group>
-                        <spriteKitScene width="2" height="2" alignment="center" scene="fixFullScreenBug" id="udd-ie-A18"/>
                     </items>
                     <connections>
+                        <outlet property="cardContainer" destination="L5A-rf-ht8" id="gWR-pm-q1z"/>
                         <outlet property="counterLabel" destination="Co1-tz-DNn" id="5oI-jO-cOy"/>
+                        <outlet property="fixFullScreenBug" destination="ITH-Rd-lfD" id="aOQ-by-qIN"/>
                         <outlet property="frontLabel" destination="byE-Pz-YjO" id="t6q-fS-t9O"/>
+                        <outlet property="mainContainer" destination="eNw-5u-TkE" id="zIF-Ze-yoJ"/>
                         <outlet property="nameLabel" destination="qym-p3-9SG" id="kA3-8G-GpK"/>
                         <outlet property="peepButton" destination="KoW-fr-LWN" id="9e2-Q8-sLp"/>
                         <outlet property="playButton" destination="HIN-Ag-2Ub" id="4eo-9n-hRJ"/>
+                        <outlet property="toolBarContainer" destination="9f5-d3-HjC" id="sO1-hc-62G"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="220" y="339"/>
+            <point key="canvasLocation" x="217" y="335"/>
         </scene>
         <!--Static Notification Interface Controller-->
         <scene sceneID="AEw-b0-oYE">

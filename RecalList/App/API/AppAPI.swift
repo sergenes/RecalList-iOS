@@ -137,8 +137,8 @@ class AppAPI: NSObject {
         let data = result.values!
         var cards:Array<Card> = []
         for row in data {
-            let word : String = row[2] as! String
-            let translation: String = row[3] as! String
+            let frontVal : String = row[2] as! String
+            let backVal: String = row[3] as! String
             let from: String = row[0] as! String
             let to: String = row[1] as! String
             var peeped:Int = 0
@@ -146,7 +146,7 @@ class AppAPI: NSObject {
                peeped = Int(row[4] as! String) ?? 0
             }
             
-            cards.append(Card(index: cards.count, word: word, translation: translation, from: from, to:to, peeped: peeped))
+            cards.append(Card(index: cards.count, front: frontVal, back: backVal, from: from, to:to, peeped: peeped))
         }
         cards = cards.sorted(by: { $0.peeped > $1.peeped })
         for card in cards {
