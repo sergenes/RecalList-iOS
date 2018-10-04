@@ -30,7 +30,7 @@ What needs to be done
 =================================
 1. Unit and UI testing.
 2. Unidirectional flow controller.
-3. Shared common module accessed from the both platform (Kotlin native).
+3. Shared common module accessed from the both platforms (Kotlin native).
 4. Web app.
 
 Contact
