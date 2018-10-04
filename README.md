@@ -26,6 +26,13 @@ And then you need to define a new URL scheme on the Info tab in XCode, using the
 com.googleusercontent.apps.XXX
 ```
 
+What needs to be done
+=================================
+1. Unit and UI testing.
+2. Unidirectional flow controller.
+3. Shared common module accessed from the both platform (Kotlin native).
+4. Web app.
+
 Contact
 =================================
 Try to contact me if you have any questions at serge.nes @ gmail.com
