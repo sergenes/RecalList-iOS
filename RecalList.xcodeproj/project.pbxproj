@@ -28,6 +28,8 @@
 		1E61567F214D6F6B00A2BFAE /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E61567E214D6F6B00A2BFAE /* Secrets.swift */; };
 		1E615681214D70B400A2BFAE /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1E615680214D70B400A2BFAE /* credentials.plist */; };
 		1E766D0B216BDC2100E24F5E /* SpeechController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E766D0A216BDC2100E24F5E /* SpeechController.swift */; };
+		1E766D0D216BFFD800E24F5E /* SpeechController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E766D0C216BFFD800E24F5E /* SpeechController.swift */; };
+		1E766D12216C2CDD00E24F5E /* InterfaceController+SessionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E766D11216C2CDD00E24F5E /* InterfaceController+SessionDelegate.swift */; };
 		1E7EB5E021518E1200931C35 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E7EB5D621514EA800931C35 /* Main.storyboard */; };
 		1E7EB5E121518E1A00931C35 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E391113214C6DD200382E8D /* LaunchScreen.storyboard */; };
 		1E7EB5E4215287D500931C35 /* AppAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7EB5E3215287D500931C35 /* AppAPI.swift */; };
@@ -143,6 +145,8 @@
 		1E61567E214D6F6B00A2BFAE /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Secrets.swift; path = ../../../local/Secrets.swift; sourceTree = "<group>"; };
 		1E615680214D70B400A2BFAE /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = credentials.plist; path = ../../local/credentials.plist; sourceTree = "<group>"; };
 		1E766D0A216BDC2100E24F5E /* SpeechController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechController.swift; sourceTree = "<group>"; };
+		1E766D0C216BFFD800E24F5E /* SpeechController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechController.swift; sourceTree = "<group>"; };
+		1E766D11216C2CDD00E24F5E /* InterfaceController+SessionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InterfaceController+SessionDelegate.swift"; sourceTree = "<group>"; };
 		1E7EB5D721514EA800931C35 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1E7EB5E3215287D500931C35 /* AppAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAPI.swift; sourceTree = "<group>"; };
 		1E7EB5E62152CEE800931C35 /* FilesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesDataSource.swift; sourceTree = "<group>"; };
@@ -221,13 +225,11 @@
 		1E1EDBDD215417F9008DB5AE /* RecalList-Watch Extension */ = {
 			isa = PBXGroup;
 			children = (
+				1E766D16216C30A300E24F5E /* App */,
+				1E766D14216C2FDF00E24F5E /* Sync */,
+				1E766D13216C2FC900E24F5E /* Speech */,
 				1EF3F4B821613C2A008B1FCD /* UI */,
-				1E1EDBE0215417F9008DB5AE /* ExtensionDelegate.swift */,
-				1E1EDBE2215417F9008DB5AE /* NotificationController.swift */,
-				1E1EDBE4215417F9008DB5AE /* ComplicationController.swift */,
-				1E1EDBE6215417FA008DB5AE /* Assets.xcassets */,
-				1E1EDBE8215417FA008DB5AE /* Info.plist */,
-				1E1EDBE9215417FA008DB5AE /* PushNotificationPayload.apns */,
+				1E766D17216C30BD00E24F5E /* Support */,
 			);
 			path = "RecalList-Watch Extension";
 			sourceTree = "<group>";
@@ -261,6 +263,7 @@
 		1E391109214C6DD100382E8D /* RecalList */ = {
 			isa = PBXGroup;
 			children = (
+				1E766D15216C300500E24F5E /* Speech */,
 				1EA1E1CC21624FD0003F224E /* Watch */,
 				1EF3F4BB21614242008B1FCD /* Model */,
 				1E9D2B8C214F2266000A87C8 /* App */,
@@ -326,6 +329,51 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		1E766D13216C2FC900E24F5E /* Speech */ = {
+			isa = PBXGroup;
+			children = (
+				1E766D0C216BFFD800E24F5E /* SpeechController.swift */,
+			);
+			path = Speech;
+			sourceTree = "<group>";
+		};
+		1E766D14216C2FDF00E24F5E /* Sync */ = {
+			isa = PBXGroup;
+			children = (
+				1E766D11216C2CDD00E24F5E /* InterfaceController+SessionDelegate.swift */,
+			);
+			path = Sync;
+			sourceTree = "<group>";
+		};
+		1E766D15216C300500E24F5E /* Speech */ = {
+			isa = PBXGroup;
+			children = (
+				1E766D0A216BDC2100E24F5E /* SpeechController.swift */,
+			);
+			path = Speech;
+			sourceTree = "<group>";
+		};
+		1E766D16216C30A300E24F5E /* App */ = {
+			isa = PBXGroup;
+			children = (
+				1E1EDBE4215417F9008DB5AE /* ComplicationController.swift */,
+				1E1EDBE2215417F9008DB5AE /* NotificationController.swift */,
+				1E1EDBE0215417F9008DB5AE /* ExtensionDelegate.swift */,
+				1EF3F4B921613CA7008B1FCD /* RecalList-Watch-Bridging-Header.h */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		1E766D17216C30BD00E24F5E /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				1E1EDBE9215417FA008DB5AE /* PushNotificationPayload.apns */,
+				1E1EDBE8215417FA008DB5AE /* Info.plist */,
+				1E1EDBE6215417FA008DB5AE /* Assets.xcassets */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
 		1E7EB5DF21516C9C00931C35 /* Navigator */ = {
 			isa = PBXGroup;
 			children = (
@@ -373,7 +421,6 @@
 				1E9D2B88214DBFC3000A87C8 /* CardView.xib */,
 				1E9D2B89214DBFC4000A87C8 /* CardView.swift */,
 				1E9D2BA02150A45B000A87C8 /* CardsDataSource.swift */,
-				1E766D0A216BDC2100E24F5E /* SpeechController.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -391,7 +438,6 @@
 			isa = PBXGroup;
 			children = (
 				1E1EDBDE215417F9008DB5AE /* InterfaceController.swift */,
-				1EF3F4B921613CA7008B1FCD /* RecalList-Watch-Bridging-Header.h */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -766,9 +812,11 @@
 				1E1EDBE3215417F9008DB5AE /* NotificationController.swift in Sources */,
 				1E8D732B216262C300B5D599 /* WatchProtocol.swift in Sources */,
 				1E1EDBE5215417F9008DB5AE /* ComplicationController.swift in Sources */,
+				1E766D12216C2CDD00E24F5E /* InterfaceController+SessionDelegate.swift in Sources */,
 				1EF3F4BE21614268008B1FCD /* Card.swift in Sources */,
 				1E1EDBE1215417F9008DB5AE /* ExtensionDelegate.swift in Sources */,
 				1E1EDBDF215417F9008DB5AE /* InterfaceController.swift in Sources */,
+				1E766D0D216BFFD800E24F5E /* SpeechController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

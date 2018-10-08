@@ -23,7 +23,17 @@ protocol CardsViewContract {
 }
 
 class CardsViewController: UIViewController, KolodaViewDelegate, CardsViewContract, WatchSyncManagerDelegate {
-    
+
+    enum PlayButtonTags {
+        static let playButton = 100
+        static let stopButton = 200
+    }
+
+    enum SourceButtonTags {
+        static let speakerButton = 101
+        static let headsetButton = 201
+    }
+
     var watchSyncManager: WatchSyncManager?
     var selectedFile:GTLRDrive_File?
     var cardsDataSource:CardsDataSource?
@@ -80,25 +90,25 @@ class CardsViewController: UIViewController, KolodaViewDelegate, CardsViewContra
     }
     
     @IBAction func pressSourceButton(_ sender: UIBarButtonItem) {
-        if sender.tag == 100 {
-            sender.tag = 200
+        if sender.tag == SourceButtonTags.speakerButton {
+            sender.tag = SourceButtonTags.headsetButton
             sender.title = "headset"
             ObjcTools.chooseSource(1)
         }else{
-            sender.tag = 100
+            sender.tag = SourceButtonTags.speakerButton
             sender.title = "speaker"
             ObjcTools.chooseSource(0)
         }
     }
     
     @IBAction func pressPlayPouseButton(_ sender: UIBarButtonItem) {
-        if sender.tag == 100 {
-           sender.tag = 200
+        if sender.tag == PlayButtonTags.playButton {
+           sender.tag = PlayButtonTags.stopButton
             sender.title = "stop"
             viewModel.playAll()
         }else{
             sender.title = "play"
-            sender.tag = 100
+            sender.tag = PlayButtonTags.playButton
             viewModel.stopAll()
         }
     }

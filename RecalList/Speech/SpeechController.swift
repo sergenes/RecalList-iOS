@@ -7,7 +7,7 @@
 //
 import AVFoundation
 
-public enum SpeechMode {
+enum SpeechMode {
     case ONE_WORD
     case PLAY_ALL_CARDS
     case STOPPED
@@ -25,32 +25,6 @@ class SpeechController:NSObject, AVSpeechSynthesizerDelegate{
         super.init()
         ObjcTools.setupAudioSession()
         synth.delegate = self
-    }
-    
-    
-    // MARK: - AVSpeechSynthesizerDelegate
-    public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didPause utterance: AVSpeechUtterance) {
-        cardsModel!.cardsView.pause()
-    }
-    
-    public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-        if speechMode != SpeechMode.PLAY_ALL_CARDS{
-            return
-        }
-        if currentSide == CardSide.FRONT {
-            currentSide = CardSide.BACK
-            Thread.sleep(forTimeInterval: PlayWordsTempo.SIDES.pause())
-        } else {
-            currentSide = CardSide.FRONT
-            if currentCard < cardsModel!.getCardsCount() - 1 {
-                currentCard = currentCard + 1
-            } else {
-                currentCard = 0
-            }
-            Thread.sleep(forTimeInterval: PlayWordsTempo.WORDS.pause())
-            cardsModel?.cardsView.showNextCard()
-        }
-        sayBothSides(index: currentCard, side: currentSide)
     }
     
     func sayOneSide(card: Card) {
@@ -97,5 +71,30 @@ class SpeechController:NSObject, AVSpeechSynthesizerDelegate{
             synth.stopSpeaking(at: .immediate)
         }
         synth.delegate = nil
+    }
+    
+    // MARK: - AVSpeechSynthesizerDelegate
+    public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didPause utterance: AVSpeechUtterance) {
+        cardsModel!.cardsView.pause()
+    }
+    
+    public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        if speechMode != SpeechMode.PLAY_ALL_CARDS{
+            return
+        }
+        if currentSide == CardSide.FRONT {
+            currentSide = CardSide.BACK
+            Thread.sleep(forTimeInterval: PlayWordsTempo.SIDES.pause())
+        } else {
+            currentSide = CardSide.FRONT
+            if currentCard < cardsModel!.getCardsCount() - 1 {
+                currentCard = currentCard + 1
+            } else {
+                currentCard = 0
+            }
+            Thread.sleep(forTimeInterval: PlayWordsTempo.WORDS.pause())
+            cardsModel?.cardsView.showNextCard()
+        }
+        sayBothSides(index: currentCard, side: currentSide)
     }
 }
