@@ -10,94 +10,41 @@ import AVFoundation
 import Koloda
 import GoogleAPIClientForREST
 
-protocol CardsScreenProtocol {
+protocol CardsModelContract {
+    var cardsView:CardsViewContract {get}
     func peepTranslation(index: Int)
     func markAsLearned(index: Int)
-    func sayWord(index: Int)
     func getCardsCount() -> Int
+    func getCard(index: Int) -> Card
     func getCardSide() -> Int
+    func getCurrentCard() -> Int
+    func sayPressed(index: Int)
+    func playAll()
+    func stopAll()
+    func detach()
 }
 
-class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppAPIInjector, AVSpeechSynthesizerDelegate {
+class CardsViewModel:NSObject, CardsModelContract, AppAPIServiceDelegate, AppAPIInjector {
+
+    let speechController:SpeechController
+    let cardsView: CardsViewContract
+    
     var selectedSegmentIndex: Int = 0
-    var currentCard = 0
-    var currentSide = CardSide.FRONT
 
-    let synth = AVSpeechSynthesizer()
-    let selectedFile: GTLRDrive_File
-    var speakerEventsDelegate: SpeakerEventsDelegate? = nil
-
-    // MARK: - AppAPIServiceDelegate
     internal var wordsArray: Array<Card> = []
-
-    // MARK: - AppAPIServiceDelegate
-    func appendCard(card: Card) {
-        wordsArray.append(card)
-    }
     
     func getData()->Array<Card>{
         return wordsArray
     }
 
-    init(selectedFile: GTLRDrive_File) {
-        self.selectedFile = selectedFile
+    init(cardsView:CardsViewContract) {
+        self.cardsView = cardsView
+        self.speechController = SpeechController()
         super.init()
+        
         wordsArray.removeAll()
-        appAPI.requestCards(selectedFile: selectedFile, delegate: self)
-        ObjcTools.setupAudioSession()
-        synth.delegate = self
-    }
-
-    // MARK: - AVSpeechSynthesizerDelegate
-    public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didPause utterance: AVSpeechUtterance) {
-        speakerEventsDelegate?.pause()
-    }
-
-    public func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-
-        if currentSide == CardSide.FRONT {
-            currentSide = CardSide.BACK
-            Thread.sleep(forTimeInterval: PlayWordsTempo.SIDES.pause())
-        } else {
-            currentSide = CardSide.FRONT
-            if currentCard < wordsArray.count - 1 {
-                currentCard = currentCard + 1
-            } else {
-                currentCard = 0
-            }
-            Thread.sleep(forTimeInterval: PlayWordsTempo.WORDS.pause())
-            speakerEventsDelegate?.done()
-        }
-        sayBothWords(index: currentCard, side: currentSide)
-    }
-
-    func sayBothWords(index: Int, side: CardSide) {
-        if synth.delegate == nil {
-            synth.delegate = self
-        }
-        currentCard = index
-
-        let card = getCard(index: index)
-        var wordToSay = card.frontVal
-        var voice = card.fromVoice()!
-
-        if side == CardSide.BACK {
-            wordToSay = card.backVal
-            voice = card.toVoice()!
-        }
-        let utterance = AVSpeechUtterance(string: wordToSay)
-        utterance.voice = voice
-
-        synth.speak(utterance)
-    }
-
-    func stop() {
-        synth.stopSpeaking(at: .word)
-        synth.delegate = nil
-    }
-
-    func getCard(index: Int) -> Card {
-        return wordsArray[index]
+        appAPI.requestCards(selectedFile: cardsView.getSelectedFile(), delegate: self)
+        self.speechController.cardsModel = self
     }
 
     func getCardByIndex(index: Int) -> Card? {
@@ -112,38 +59,45 @@ class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppA
     func getFirstCard() -> Card {
         return wordsArray[0]
     }
-
-    // MARK: - CardsScreenProtocol
-    func sayWord(index: Int) {
-        synth.delegate = nil
-        guard let card = getCardByIndex(index: index) else {
-            return
-        }
-        let utterance = AVSpeechUtterance(string: card.frontVal)
-        utterance.voice = card.fromVoice()!
-        synth.speak(utterance)
+    
+    // MARK: - CardsModelContract
+    func getCurrentCard() -> Int {
+        return cardsView.getCurrentCardIndex()
+    }
+    
+    func sayPressed(index: Int){
+        let card = getCard(index: index)
+        speechController.sayOneSide(card: card)
+    }
+    
+    func playAll(){
+        speechController.playSpeech()
+    }
+    
+    func stopAll(){
+        speechController.stop()
+    }
+    
+    func getCard(index: Int) -> Card {
+        return wordsArray[index]
     }
 
-    // MARK: - CardsScreenProtocol
     func getCardsCount() -> Int {
         return wordsArray.count
     }
 
-    // MARK: - CardsScreenProtocol
     func getCardSide() -> Int {
         return selectedSegmentIndex
     }
 
-    // MARK: - CardsScreenProtocol
     func peepTranslation(index: Int) {
         guard let card = getCardByIndex(index: index) else {
             return
         }
         card.peeped = card.peeped + 1
-        appAPI.requestUpdateACard(card: card, selectedFile: selectedFile, delegate: self)
+        appAPI.requestUpdateACard(card: card, selectedFile: cardsView.getSelectedFile(), delegate: self)
     }
 
-    // MARK: - CardsScreenProtocol
     func markAsLearned(index: Int) {
         guard let card = getCardByIndex(index: index) else {
             return
@@ -154,6 +108,16 @@ class CardsViewModel: NSObject, CardsScreenProtocol, AppAPIServiceDelegate, AppA
             card.peeped = -1
         }
 
-        appAPI.requestMarkAsKnownACard(card: card, selectedFile: selectedFile, delegate: self)
+        appAPI.requestMarkAsKnownACard(card: card, selectedFile: cardsView.getSelectedFile(), delegate: self)
+    }
+    
+    func detach(){
+        speechController.onDetach()
+    }
+    
+    
+    // MARK: - AppAPIServiceDelegate
+    func appendCard(card: Card) {
+        wordsArray.append(card)
     }
 }

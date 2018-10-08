@@ -10,7 +10,7 @@ import UIKit
 
 public class CardView: UIView {
     
-    var cardsScreen: CardsScreenProtocol!
+    var cardsScreen: CardsModelContract!
     
     @IBOutlet weak var frontView: UIView!
     @IBOutlet weak var backView: UIView!
@@ -22,7 +22,7 @@ public class CardView: UIView {
     private var markedAsLearned = false
     private var backUpColor:UIColor?
     
-    func setup(card: Card, index:Int, cardsScreen: CardsScreenProtocol) {
+    func setup(card: Card, index:Int, cardsScreen: CardsModelContract) {
         self.cardsScreen = cardsScreen
         
         if cardsScreen.getCardSide() == 0 {
@@ -62,7 +62,8 @@ public class CardView: UIView {
     }
     
     @IBAction func pressSay(_ sender: Any) {
-        cardsScreen.sayWord(index: self.tag)
+//        cardsScreen.sayWord(index: self.tag)
+        cardsScreen.sayPressed(index: self.tag)
     }
     
     @IBAction func pressMarkAsLearned(_ sender: UIButton) {

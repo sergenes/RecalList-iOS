@@ -27,6 +27,7 @@
 		1E391142214CAD5A00382E8D /* FilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E391141214CAD5A00382E8D /* FilesViewController.swift */; };
 		1E61567F214D6F6B00A2BFAE /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E61567E214D6F6B00A2BFAE /* Secrets.swift */; };
 		1E615681214D70B400A2BFAE /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1E615680214D70B400A2BFAE /* credentials.plist */; };
+		1E766D0B216BDC2100E24F5E /* SpeechController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E766D0A216BDC2100E24F5E /* SpeechController.swift */; };
 		1E7EB5E021518E1200931C35 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E7EB5D621514EA800931C35 /* Main.storyboard */; };
 		1E7EB5E121518E1A00931C35 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E391113214C6DD200382E8D /* LaunchScreen.storyboard */; };
 		1E7EB5E4215287D500931C35 /* AppAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7EB5E3215287D500931C35 /* AppAPI.swift */; };
@@ -141,6 +142,7 @@
 		1E391141214CAD5A00382E8D /* FilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesViewController.swift; sourceTree = "<group>"; };
 		1E61567E214D6F6B00A2BFAE /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Secrets.swift; path = ../../../local/Secrets.swift; sourceTree = "<group>"; };
 		1E615680214D70B400A2BFAE /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = credentials.plist; path = ../../local/credentials.plist; sourceTree = "<group>"; };
+		1E766D0A216BDC2100E24F5E /* SpeechController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechController.swift; sourceTree = "<group>"; };
 		1E7EB5D721514EA800931C35 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1E7EB5E3215287D500931C35 /* AppAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAPI.swift; sourceTree = "<group>"; };
 		1E7EB5E62152CEE800931C35 /* FilesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesDataSource.swift; sourceTree = "<group>"; };
@@ -371,6 +373,7 @@
 				1E9D2B88214DBFC3000A87C8 /* CardView.xib */,
 				1E9D2B89214DBFC4000A87C8 /* CardView.swift */,
 				1E9D2BA02150A45B000A87C8 /* CardsDataSource.swift */,
+				1E766D0A216BDC2100E24F5E /* SpeechController.swift */,
 			);
 			path = Cards;
 			sourceTree = "<group>";
@@ -778,6 +781,7 @@
 				1EF3F4BD21614268008B1FCD /* Card.swift in Sources */,
 				1E7EB5EB2152D23200931C35 /* FileAPI.swift in Sources */,
 				1E7EB5ED2152D8CB00931C35 /* AuthAPI.swift in Sources */,
+				1E766D0B216BDC2100E24F5E /* SpeechController.swift in Sources */,
 				1E9D2B92214F262D000A87C8 /* AppNavigator.swift in Sources */,
 				1E7EB5E4215287D500931C35 /* AppAPI.swift in Sources */,
 				1E8D732A216262C300B5D599 /* WatchProtocol.swift in Sources */,
@@ -884,7 +888,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nes.recallist.RecalList.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "RecalList-Watch/UI/RecalList-Watch-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
@@ -911,7 +915,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nes.recallist.RecalList.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "RecalList-Watch/UI/RecalList-Watch-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -934,7 +938,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nes.recallist.RecalList.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 5.0;
@@ -956,7 +960,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nes.recallist.RecalList.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
+				SKIP_INSTALL = NO;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 5.0;
@@ -1088,6 +1092,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2ZHU68F9DV;
 				INFOPLIST_FILE = RecalList/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1110,6 +1115,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2ZHU68F9DV;
 				INFOPLIST_FILE = RecalList/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

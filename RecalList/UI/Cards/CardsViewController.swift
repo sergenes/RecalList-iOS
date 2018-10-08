@@ -14,29 +14,15 @@ import SVProgressHUD
 import MediaPlayer
 import WatchConnectivity
 
+protocol CardsViewContract {
+    func getSelectedFile() -> GTLRDrive_File
+    func resetCards()
+    func getCurrentCardIndex()->Int
+    func showNextCard()
+    func pause()
+}
 
-class CardsViewController: UIViewController, KolodaViewDelegate, SpeakerEventsDelegate, WatchSyncManagerDelegate {
-    // MARK: - WatchSyncManagerDelegate
-    func watchActivated() {
-        UI {
-            self.syncButton.isEnabled = true
-        }
-    }
-    
-    func watchDeactivated(){
-        UI {
-            self.syncButton.isEnabled = false
-        }
-    }
-    
-    func dataSent(sync: Bool){
-        UI {
-            SVProgressHUD.dismiss()
-            if !sync {
-                //todo show error
-            }
-        }
-    }
+class CardsViewController: UIViewController, KolodaViewDelegate, CardsViewContract, WatchSyncManagerDelegate {
     
     var watchSyncManager: WatchSyncManager?
     var selectedFile:GTLRDrive_File?
@@ -49,11 +35,12 @@ class CardsViewController: UIViewController, KolodaViewDelegate, SpeakerEventsDe
     @IBOutlet weak var playButton: UIBarButtonItem!
 
     lazy private var viewModel: CardsViewModel = {
-        return CardsViewModel(selectedFile: self.selectedFile!)
+        return CardsViewModel(cardsView: self)
     }()
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+        viewModel.detach()
     }
     
     override func viewDidLoad() {
@@ -86,16 +73,7 @@ class CardsViewController: UIViewController, KolodaViewDelegate, SpeakerEventsDe
         
         SVProgressHUD.dismiss()
     }
-    
-    // MARK: - SpeakerEventsDelegate
-    func done() {
-        self.kolodaView.swipe(.left, force: true)
-    }
-    
-    func pause() {
-        pressPlayPouseButton(playButton)
-    }
-    
+
     @IBAction func pressSyncButton(_ sender: UIBarButtonItem) {
         SVProgressHUD.show()
         watchSyncManager?.sendData(cards:viewModel.getData(), name:selectedFile!.name!)
@@ -114,20 +92,15 @@ class CardsViewController: UIViewController, KolodaViewDelegate, SpeakerEventsDe
     }
     
     @IBAction func pressPlayPouseButton(_ sender: UIBarButtonItem) {
-        if viewModel.speakerEventsDelegate == nil {
-           viewModel.speakerEventsDelegate = self
-        }
         if sender.tag == 100 {
            sender.tag = 200
             sender.title = "stop"
-            let index = self.kolodaView.currentCardIndex
-            viewModel.sayBothWords(index: index, side: CardSide.FRONT)
+            viewModel.playAll()
         }else{
             sender.title = "play"
             sender.tag = 100
-            viewModel.stop()
+            viewModel.stopAll()
         }
-        
     }
     
     @IBAction func pressBack(_ sender: UIButton) {
@@ -151,5 +124,49 @@ class CardsViewController: UIViewController, KolodaViewDelegate, SpeakerEventsDe
     
     func koloda(_ koloda: KolodaView, didSelectCardAt index: Int) {
         
+    }
+    
+    // MARK: - CardsViewContract
+    func resetCards(){
+        self.kolodaView.resetCurrentCardIndex()
+    }
+    
+    func getCurrentCardIndex()->Int{
+        let index = self.kolodaView.currentCardIndex
+        return index
+    }
+    
+    func showNextCard(){
+        self.kolodaView.swipe(.left, force: true)
+    }
+    
+    func getSelectedFile() -> GTLRDrive_File {
+        return selectedFile!
+    }
+    
+    func pause() {
+        pressPlayPouseButton(playButton)
+    }
+    
+    // MARK: - WatchSyncManagerDelegate
+    func watchActivated() {
+        UI {
+            self.syncButton.isEnabled = true
+        }
+    }
+    
+    func watchDeactivated(){
+        UI {
+            self.syncButton.isEnabled = false
+        }
+    }
+    
+    func dataSent(sync: Bool){
+        UI {
+            SVProgressHUD.dismiss()
+            if !sync {
+                //todo show error
+            }
+        }
     }
 }

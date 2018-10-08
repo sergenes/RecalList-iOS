@@ -22,7 +22,7 @@ enum Mode {
     case playing
 }
 
-class InterfaceController: WKInterfaceController, AVSpeechSynthesizerDelegate {
+class InterfaceController: WKInterfaceController, AVSpeechSynthesizerDelegate, WKCrownDelegate {
     let synth = AVSpeechSynthesizer()
     let sessionAudio = AVAudioSession.sharedInstance()
     
@@ -101,6 +101,22 @@ class InterfaceController: WKInterfaceController, AVSpeechSynthesizerDelegate {
         catch let error {
             fatalError("*** Unable to set up the audio session: \(error.localizedDescription) ***")
         }
+        
+        crownSequencer.delegate = self
+    }
+    
+    override func didAppear() {
+        crownSequencer.focus()
+    }
+    
+    //MARK: crownSequencer Delegates
+    func crownDidRotate(_ crownSequencer: WKCrownSequencer?, rotationalDelta: Double) {
+//        value += rotationalDelta
+//        let rps = (crownSequencer?.rotationsPerSecond)!
+        if (abs(rotationalDelta) > 0.05) {
+            showNextCard()
+        }
+        print(rotationalDelta)
     }
     
     override func willActivate() {
@@ -142,8 +158,11 @@ class InterfaceController: WKInterfaceController, AVSpeechSynthesizerDelegate {
                     // Handle the error here.
                     return
                 }
-                
                 self.sayBothWords(index: self.currentCard, side: self.currentSide)
+//                while  self.mode != .idle {
+//                    Thread.sleep(forTimeInterval: 0.5)
+//                }
+                
             })
         }else{
             mode = .idle
@@ -231,6 +250,8 @@ extension InterfaceController: WCSessionDelegate {
             sharedDefault?.set(dataArray, forKey: StorageKeys.arrayKey)
             sharedDefault?.synchronize()
             wordsArray.removeAll()
+            currentCard = 0
+            currentSide = CardSide.FRONT
             for data in dataArray {
                 do {
                     if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]{
